@@ -1,4 +1,4 @@
-# AoC day 3, puzzle 1.
+# AoC day 3, puzzle 2.
 
 #   #217 @ 897,812: 16x26
 #    ID    x    y   w  h    
@@ -22,7 +22,7 @@ def parse_line(line):
     line = remove_chars(line, [' ', '#'])
     return map(lambda x: int(x), multi_split(line, ['@', ',', ':', 'x']))
     
-def collect_data():
+def calc_fabric():
     def process_point(d):
         x = d[1]
         y = d[2]
@@ -44,8 +44,28 @@ def collect_data():
     lines = get_input()
     data = [parse_line(l) for l in lines]
     [process_point(d) for d in data]
-    print count_contested_squares()
+    return fabric, data
+
+def find_uncontested_rectangle():
+    fabric, data = calc_fabric()
+
+    def rectangle_is_uncontested(rect):
+        x = d[1]
+        y = d[2]
+        w = d[3]
+        h = d[4]
+        for i in xrange(x, x+w):
+            for j in xrange(y, y+h):       
+                if fabric[i][j] != 1: return False
+        return True
+
+    for d in data:
+        if rectangle_is_uncontested(d):
+            print "Rectangle ID {} is uncontested!".format(d[0])
+            return
 
 
-collect_data()
+
+
+find_uncontested_rectangle()
 
