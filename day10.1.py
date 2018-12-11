@@ -4,6 +4,8 @@ from collections import namedtuple
 star = namedtuple('star', ['x', 'y', 'vx', 'vy'])
 modelsize = namedtuple('modelsize', ['x', 'y'])
 
+size = modelsize(256, 256)
+
 def get_input():
     with open('input10') as fh:
         lines = list(fh)
@@ -27,30 +29,44 @@ def generate_stars(data):
     return stars
 
 def reset_model():
-    size = modelsize(256, 256)
-    model = [['.'] * size.x for i in xrange(size.y)]
+    model = [['.'] * size.y for i in xrange(size.x)]
     return model
 
 def populate_model(model, stars):
-    scale_factor =  1.0 / 65536.0 * 256.0
+    scale_factor =  1.0 / 65536.0
     for s in stars:
-        x = int(stars['curx'] * scale_factor)
-        y = int(stars['cury'] * scale_factor)
-    model[x][y] = '#'
+        x = int(s['curx'] * scale_factor * size.x)
+        y = int(s['cury'] * scale_factor * size.y)
+        model[x][y] = '#'
 
 
 def iterate_stars(stars):
     for s in stars:
-        stars['curx'] += stars['initial'].vx
-        stars['cury'] += stars['initial'].velocity
+        s['curx'] += s['initial'].vx
+        s['cury'] += s['initial'].vy
 
 def print_model(model):
+    import os
+    os.system('clear')
     for row in model:
         print ''.join(row)
 
 def go():
+    import time
     input = get_input()
-    
+    line_data = []
     for line in input:
-        star = parse_line(line)
+        line_data.append(parse_line(line))
+    stars = generate_stars(line_data)
+    it = 0
+    while True:
+        model = reset_model()
+        populate_model(model, stars)
+        print_model(model)
+        print it
+        it = it + 1
+        for i in xrange(15):
+                iterate_stars(stars)
+        time.sleep(0.1)
 
+go()
