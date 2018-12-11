@@ -20,15 +20,37 @@ def parse_line(line):
     # X, Y, vx, vy
     return star(*data)
 
-def generate_model(data):
-    size = modelsize(256, 256)
-    model = [{}} * size.x for i in xrange(size.y)]
+def generate_stars(data):
     stars = []
     for d in data:
         stars.append({'curx': d.x, 'cury': d.y, 'initial': d})
+    return stars
+
+def reset_model():
+    size = modelsize(256, 256)
+    model = [['.'] * size.x for i in xrange(size.y)]
+    return model
+
+def populate_model(model, stars):
+    scale_factor =  1.0 / 65536.0 * 256.0
+    for s in stars:
+        x = int(stars['curx'] * scale_factor)
+        y = int(stars['cury'] * scale_factor)
+    model[x][y] = '#'
+
+
+def iterate_stars(stars):
+    for s in stars:
+        stars['curx'] += stars['initial'].vx
+        stars['cury'] += stars['initial'].velocity
+
+def print_model(model):
+    for row in model:
+        print ''.join(row)
+
+def go():
+    input = get_input()
     
-
-
-for l in get_input():
-    print parse_line(l)
+    for line in input:
+        star = parse_line(line)
 
