@@ -4,7 +4,7 @@ from collections import namedtuple
 star = namedtuple('star', ['x', 'y', 'vx', 'vy'])
 modelsize = namedtuple('modelsize', ['x', 'y'])
 
-size = modelsize(256, 256)
+size = modelsize(65536, 65536)
 
 def get_input():
     with open('input10') as fh:
@@ -33,10 +33,10 @@ def reset_model():
     return model
 
 def populate_model(model, stars):
-    scale_factor =  1.0 / 65536.0
+    #scale_factor =  1.0 / 65536.0
     for s in stars:
-        x = int(s['curx'] * scale_factor * size.x)
-        y = int(s['cury'] * scale_factor * size.y)
+        x = int(s['curx'])# * scale_factor * size.x)
+        y = int(s['cury'])# * scale_factor * size.y)
         model[x][y] = '#'
 
 
@@ -45,13 +45,19 @@ def iterate_stars(stars):
         s['curx'] += s['initial'].vx
         s['cury'] += s['initial'].vy
 
-def print_model(model):
+def print_model(model, start, win_size):
     import os
     os.system('clear')
-    for row in model:
-        print ''.join(row)
+    
+    for row in model[start.y : start.y + win_size.y]:
+        print ''.join(row[start.x : start.x + win_size.x])
+
+
 
 def go():
+    start = modelsize(14000, 28000)
+    win_size = modelsize(1400, 1400)
+
     import time
     input = get_input()
     line_data = []
@@ -62,11 +68,11 @@ def go():
     while True:
         model = reset_model()
         populate_model(model, stars)
-        print_model(model)
+        print_model(model, start, win_size)
         print it
         it = it + 1
         for i in xrange(15):
-                iterate_stars(stars)
+            iterate_stars(stars)
         time.sleep(0.1)
 
 go()
