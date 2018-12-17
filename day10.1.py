@@ -1,5 +1,8 @@
 
 from collections import namedtuple
+import time
+import os
+
 
 star = namedtuple('star', ['x', 'y', 'vx', 'vy'])
 modelsize = namedtuple('modelsize', ['x', 'y'])
@@ -53,26 +56,53 @@ def print_model(model, start, win_size):
         print ''.join(row[start.x : start.x + win_size.x])
 
 
+def do_bins(stars):
+    minval = -65536
+    maxval = 65535
+    divisions = 50
+    step = (maxval - minval) / divisions
+    bins = [[{}] * divisions for a in range(divisions)]
+    for i in xrange(divisions):
+        for j in xrange(divisions):
+            curx = minval + i * step
+            cury = minval + j * step
+            bins[i][j]['x'] = curx
+            bins[i][j]['y'] = cury
+    print bins
+
+
+def calc_bounding_box(stars):
+    ymin = xmin = 0
+    ymax = xmax = 0
+    for cur_star in stars:
+        xmin = min(xmin, cur_star['curx'])
+        xmax = max(xmax, cur_star['curx'])
+        ymin = min(ymin, cur_star['cury'])
+        ymax = max(ymax, cur_star['cury'])
+    return xmin, xmax, ymin, ymax
+
+def bounding_box_area(box):
+    xmin, xmax, ymin, ymax = box
+    return (xmax - xmin) * (ymax - ymin)
+
 
 def go():
     start = modelsize(14000, 28000)
     win_size = modelsize(1400, 1400)
 
-    import time
     input = get_input()
     line_data = []
     for line in input:
         line_data.append(parse_line(line))
     stars = generate_stars(line_data)
+
     it = 0
+    areas = []
     while True:
-        model = reset_model()
-        populate_model(model, stars)
-        print_model(model, start, win_size)
-        print it
+        box = calc_bounding_box(stars)
+        areas.append(bounding_box_area(box))
         it = it + 1
-        for i in xrange(15):
+        for i in xrange(100):
             iterate_stars(stars)
-        time.sleep(0.1)
 
 go()
