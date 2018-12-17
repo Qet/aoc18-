@@ -31,49 +31,14 @@ def generate_stars(data):
         stars.append({'curx': d.x, 'cury': d.y, 'initial': d})
     return stars
 
-def reset_model():
-    model = [['.'] * size.y for i in xrange(size.x)]
-    return model
-
-def populate_model(model, stars):
-    #scale_factor =  1.0 / 65536.0
-    for s in stars:
-        x = int(s['curx'])# * scale_factor * size.x)
-        y = int(s['cury'])# * scale_factor * size.y)
-        model[x][y] = '#'
-
-
 def iterate_stars(stars):
     for s in stars:
         s['curx'] += s['initial'].vx
         s['cury'] += s['initial'].vy
 
-def print_model(model, start, win_size):
-    import os
-    os.system('clear')
-    
-    for row in model[start.y : start.y + win_size.y]:
-        print ''.join(row[start.x : start.x + win_size.x])
-
-
-def do_bins(stars):
-    minval = -65536
-    maxval = 65535
-    divisions = 50
-    step = (maxval - minval) / divisions
-    bins = [[{}] * divisions for a in range(divisions)]
-    for i in xrange(divisions):
-        for j in xrange(divisions):
-            curx = minval + i * step
-            cury = minval + j * step
-            bins[i][j]['x'] = curx
-            bins[i][j]['y'] = cury
-    print bins
-
-
 def calc_bounding_box(stars):
-    ymin = xmin = 0
-    ymax = xmax = 0
+    ymin = xmin = 999999999
+    ymax = xmax = -999999999
     for cur_star in stars:
         xmin = min(xmin, cur_star['curx'])
         xmax = max(xmax, cur_star['curx'])
@@ -84,6 +49,21 @@ def calc_bounding_box(stars):
 def bounding_box_area(box):
     xmin, xmax, ymin, ymax = box
     return (xmax - xmin) * (ymax - ymin)
+
+def print_stars(stars, box):
+    print box
+    xmin, xmax, ymin, ymax = box
+    buf = 10
+    for j in xrange(ymin - buf, ymax + buf):
+        line = ''
+        for i in xrange(xmin - buf, xmax + buf):
+            has_star = False 
+            for s in stars:
+                if s['curx'] == i and s['cury'] == j:
+                    has_star = True
+                    break
+            line += '#' if has_star else '.'
+        print line
 
 
 def go():
@@ -98,11 +78,21 @@ def go():
 
     it = 0
     areas = []
-    while True:
+    min_area = 99999999999999
+    min_index = 0
+    for it in xrange(12000):
         box = calc_bounding_box(stars)
-        areas.append(bounding_box_area(box))
+        new_area = bounding_box_area(box)
+        areas.append(new_area)
+        if new_area < min_area:
+            min_area = new_area
+            min_index = it
+
+        if it == 10619:
+            print_stars(stars, box)
+
         it = it + 1
-        for i in xrange(100):
-            iterate_stars(stars)
+        iterate_stars(stars)
+    print min_area, min_index
 
 go()
