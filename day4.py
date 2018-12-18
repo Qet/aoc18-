@@ -20,7 +20,14 @@ def parse_line(line):
         return int(spl[1])
     
     def parse_timestamp(timestamp):
-        return time.strptime(timestamp, '%Y-%m-%d %H:%M')
+        t = time.strptime(timestamp, '%Y-%m-%d %H:%M')
+        mins = t[4] + \
+               t[3] * 60 + \
+               t[2] * 24 * 60 + \
+               t[1] * 30 * 24 * 60 + \
+               t[0] * 365 * 24 * 60
+        return mins, t
+
 
     line = line.replace('[', '')
     line = line.replace('] ', '~')
@@ -30,7 +37,8 @@ def parse_line(line):
     act = spl[1]
 
     ret = {}
-    ret['ts'] = parse_timestamp(ts)
+    ret['mins'], ret['ts'] = parse_timestamp(ts)
+        
     if 'begins shift' in act:
         ret['id'] = parse_id(act)
         ret['act'] = 'begin'
@@ -44,14 +52,20 @@ def parse_line(line):
     return ret
 
 def sort_entries(data):
-    def sort_cmp(item):
-        return item
-    data.sort()
+    def sort_cmp(a, b):
+        return a['mins'] - b['mins']
+    data.sort(cmp=sort_cmp)
 
+def make_table(data):
+    
 
 def go():
     input = get_input()
+    data = []
     for line in input:
-        print parse_line(line)
+        data.append(parse_line(line))
+    sort_entries(data)
+    print data
+    
 
 go()
