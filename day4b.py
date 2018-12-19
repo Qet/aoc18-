@@ -58,13 +58,52 @@ def sort_entries(data):
         return a['total_mins'] - b['total_mins']
     data.sort(cmp=sort_cmp)
 
-def make_table(data):
-    rows = []
+def calc_mins_asleep(data):
+    cur_id = -1
+    sleep_time = {}
+    sleep_min_count = {}
+
+    sleep_start = -1
     for d in data:
-        print d['act'] + "\t" + d['date_string'] + "\tID: " + str(d.get('id', '')) + '\t' + str(d['min'])
-        # new_row = {}
-        # new_row['date'] = d['date_string']
-        # new_row['id']
+        if d['act'] == 'begin':
+            cur_id = d['id']
+        elif d['act'] == 'sleep':
+            sleep_start = d['min']
+        elif d['act'] == 'wake':
+            if cur_id not in sleep_time:
+                sleep_time[cur_id] = 0
+            sleep_time[cur_id] += d['min'] - sleep_start
+
+            if cur_id not in sleep_min_count:
+                sleep_min_count[cur_id] = [0] * 60
+            for m in xrange(sleep_start, d['min']):
+                sleep_min_count[cur_id][m] += 1
+
+    st_list = zip(sleep_time.keys(), sleep_time.values())
+    
+    st_list.sort(cmp = lambda a, b: b[1] - a[1])
+
+    chosen_id = st_list[0][0]
+    mins_sleep = st_list[0][1]
+    print 'Guard #{} spends the most time asleep ({} mins)'.format(chosen_id, mins_sleep)
+
+    guard_sleep_list = sleep_min_count[chosen_id]
+    max_val = 0
+    max_idx = 0
+    for i in xrange(60):
+        if guard_sleep_list[i] >= max_val:
+            max_idx = i
+            max_val = guard_sleep_list[i]
+    print 'He slept for the longest during #{} minute ({} minutes)'.format(max_idx, max_val)
+
+    print 'ID x minute = {}'.format(chosen_id * max_idx)
+
+    print guard_sleep_list
+
+    return st_list[0]  # (ID, mins asleep)
+
+
+
 
 def go():
     input = get_input()
@@ -72,6 +111,6 @@ def go():
     for line in input:
         data.append(parse_line(line))
     sort_entries(data)
-    make_table(data)
+    calc_mins_asleep(data)
 
 go()
