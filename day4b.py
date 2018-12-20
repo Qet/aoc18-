@@ -24,9 +24,14 @@ def parse_line(line):
         total_mins = t[4] + \
                t[3] * 60 + \
                t[2] * 24 * 60 + \
-               t[1] * 30 * 24 * 60 + \
-               t[0] * 365 * 24 * 60
+               t[1] * 32 * 24 * 60
         minute = t[4]
+
+        # print t
+        # print t[0], t[1], t[2], t[3], t[4]
+        # print timestamp
+        
+
         date_string = str(t[1]) + '-' + str(t[2])
         return total_mins, minute, time_struct, date_string
 
@@ -79,9 +84,12 @@ def calc_mins_asleep(data):
             for m in xrange(sleep_start, d['min']):
                 sleep_min_count[cur_id][m] += 1
 
+    print sleep_min_count
     st_list = zip(sleep_time.keys(), sleep_time.values())
     
     st_list.sort(cmp = lambda a, b: b[1] - a[1])
+
+    print st_list 
 
     chosen_id = st_list[0][0]
     mins_sleep = st_list[0][1]
@@ -91,14 +99,15 @@ def calc_mins_asleep(data):
     max_val = 0
     max_idx = 0
     for i in xrange(60):
-        if guard_sleep_list[i] >= max_val:
+        if guard_sleep_list[i] > max_val:
             max_idx = i
             max_val = guard_sleep_list[i]
     print 'He slept for the longest during #{} minute ({} minutes)'.format(max_idx, max_val)
 
     print 'ID x minute = {}'.format(chosen_id * max_idx)
 
-    print guard_sleep_list
+    # for i in xrange(60):
+    #     print '{}: {}'.format(i, guard_sleep_list[i])
 
     return st_list[0]  # (ID, mins asleep)
 
@@ -111,6 +120,13 @@ def go():
     for line in input:
         data.append(parse_line(line))
     sort_entries(data)
+    timestamps = set()
+    for d in data:
+        if d['total_mins'] in timestamps:
+            print 'dupe: ', d['total_mins']
+        timestamps.add(d['total_mins'])
+    # print len(data)
+    # print len(timestamps)  
     calc_mins_asleep(data)
 
 go()
