@@ -5,7 +5,7 @@ import os
 
 
 def get_input():
-    with open('input4') as fh:
+    with open('aocjava/inputs/input4.txt') as fh:
         lines = list(fh)
         return map(lambda x: x.rstrip(), lines)
 
