@@ -9,8 +9,131 @@ class Edge{
     public char dest;
 }
 
+
+class Worker{
+
+    public enum WorkerState{
+        IDLE,
+        WORKING,
+        FINISHED
+    }
+
+    public Worker(){
+        state = WorkerState.IDLE;
+    }
+
+    public void startWork(Character step){
+        this.step = step;
+        state = WorkerState.WORKING;
+        startTime = timeNow;
+    }
+
+    public void stepTime(int now){
+        timeNow = now;
+        if (isComplete()){
+            state = WorkerState.FINISHED;
+        }
+    }
+
+    public boolean isIdle(){ return state == WorkerState.IDLE; }
+    public boolean isFinished(){ return state == WorkerState.FINISHED; }
+
+    public Character collectResult(){
+        state = WorkerState.IDLE;
+        return step;
+    }
+
+    private Character step;
+    private int startTime;
+    private int timeNow;
+    private WorkerState state;
+
+    private boolean isComplete(){
+        return (state == WorkerState.WORKING) && ((timeNow - startTime) >= calcTaskDuration(step));
+    }
+
+    private static int calcTaskDuration(Character task){
+        return (int)((char)(task) - 'A') + 61;
+    }
+
+
+}
+
 public class Day7 {
     public static void main(String[] args) {
+        //doPart1();
+
+        doPart2();
+
+
+    }
+
+    public static final int NUM_WORKERS = 5;
+
+    public static void doPart2(){
+
+        ArrayList<Worker> workers = createWorkers();
+        int time = 0;
+        Map<Character, Set<Character>> data = parseLines(new InputReader(7));
+        Set<Character> doneSteps = new HashSet<>();
+        Set<Character> workingAndDoneSteps = new HashSet<>();
+
+
+        boolean foundIdleWorker = false;
+        while(doneSteps.size() < data.keySet().size()){
+
+            //Load up workers
+            Character nextStep = findNextStep(data, workingAndDoneSteps);
+            Worker nextFreeWorker = findIdleWorker(workers);
+            if (nextStep != null && nextFreeWorker != null){
+                if (nextFreeWorker.isIdle()){
+                    nextFreeWorker.startWork(nextStep);
+                    workingAndDoneSteps.add(nextStep);
+                }
+            }
+            else{
+                time++;
+                incrementWorkerTime(workers, time);
+            }
+
+            //Check if workers are finished.
+            for(Worker w : workers){
+                if (w.isFinished()){
+                    Character res = w.collectResult();
+                    doneSteps.add(res);
+                    workingAndDoneSteps.add(res);
+                }
+            }
+        }
+
+        System.out.println("[Part 2] All done in " + time + " seconds.");
+
+    }
+
+    public static void incrementWorkerTime(ArrayList<Worker> workers, int time){
+        for(Worker w : workers){
+            w.stepTime(time);
+        }
+    }
+
+    public static ArrayList<Worker> createWorkers(){
+        ArrayList<Worker> workers = new ArrayList<>();
+        for (int i = 0; i < NUM_WORKERS; i++) {
+            workers.add(new Worker());
+        }
+        return workers;
+    }
+
+    public static Worker findIdleWorker(ArrayList<Worker> workers){
+        for(Worker w : workers){
+            if (w.isIdle()){
+                return w;
+            }
+        }
+        return null;
+    }
+
+    public static void doPart1(){
         Map<Character, Set<Character>> data = parseLines(new InputReader(7));
 
         StringBuilder result = new StringBuilder();
@@ -19,11 +142,8 @@ public class Day7 {
             Character nextStep = findNextStep(data, doneSteps);
             doneSteps.add(nextStep);
             result.append(nextStep);
-            System.out.println("Adding " + nextStep);
         }
-
-        System.out.println(result.toString());
-
+        System.out.println("[Part 1]: " + result.toString());
 
     }
 
@@ -41,6 +161,9 @@ public class Day7 {
         }
 
         canBeginSteps.sort((a, b) -> a.compareTo(b));
+        if (canBeginSteps.size() == 0) {
+            return null;
+        }
         return canBeginSteps.get(0);
     }
 
@@ -67,6 +190,7 @@ public class Day7 {
 
         for(Edge e : edges){
             nodes.add(e.src);
+            nodes.add(e.dest); // Because there can be some nodes that are only present as a dest, not a src.
         }
         return nodes;
     }
