@@ -43,7 +43,7 @@ class Worker{
         return step;
     }
 
-    private Character step;
+    public Character step;
     private int startTime;
     private int timeNow;
     private WorkerState state;
@@ -53,7 +53,8 @@ class Worker{
     }
 
     private static int calcTaskDuration(Character task){
-        return (int)((char)(task) - 'A') + 61;
+        int result = (int)((char)(task) - 'A') + 61;
+        return result;
     }
 
 
@@ -77,21 +78,31 @@ public class Day7 {
         Map<Character, Set<Character>> data = parseLines(new InputReader(7));
         Set<Character> doneSteps = new HashSet<>();
         Set<Character> workingAndDoneSteps = new HashSet<>();
+        Set<Character> workingSteps = new HashSet<>();
 
 
         boolean foundIdleWorker = false;
         while(doneSteps.size() < data.keySet().size()){
 
             //Load up workers
-            Character nextStep = findNextStep(data, workingAndDoneSteps);
-            Worker nextFreeWorker = findIdleWorker(workers);
-            if (nextStep != null && nextFreeWorker != null){
-                if (nextFreeWorker.isIdle()){
-                    nextFreeWorker.startWork(nextStep);
-                    workingAndDoneSteps.add(nextStep);
+            ArrayList<Character> canBeginSteps = findCanBeginSteps(data, doneSteps);
+            boolean foundWorker = false;
+            if (canBeginSteps.size() > 0){
+                for(Character nextStep : canBeginSteps){
+                    if (!workingSteps.contains(nextStep)) {
+                        Worker nextFreeWorker = findIdleWorker(workers);
+                        if (nextFreeWorker != null) {
+                            nextFreeWorker.startWork(nextStep);
+                            workingSteps.add(nextStep);
+                            foundWorker = true;
+                        } else {
+                            break;
+                        }
+                    }
                 }
             }
-            else{
+
+            if (!foundWorker){
                 time++;
                 incrementWorkerTime(workers, time);
             }
@@ -101,7 +112,7 @@ public class Day7 {
                 if (w.isFinished()){
                     Character res = w.collectResult();
                     doneSteps.add(res);
-                    workingAndDoneSteps.add(res);
+                    workingSteps.remove(res);
                 }
             }
         }
@@ -111,8 +122,13 @@ public class Day7 {
     }
 
     public static void incrementWorkerTime(ArrayList<Worker> workers, int time){
+        System.out.println(" ** New time: " + time);
+        int workerNum = 0;
         for(Worker w : workers){
             w.stepTime(time);
+            System.out.println("Worker " + workerNum + " (" + w.step + ") " + (w.isIdle() ? "IDLE " : "") +
+                    (w.isFinished() ? "FINISHED " : "WORKING"));
+            workerNum++;
         }
     }
 
@@ -148,6 +164,10 @@ public class Day7 {
     }
 
     public static Character findNextStep(Map<Character, Set<Character>> data, Set<Character> doneSteps){
+        return findCanBeginSteps(data, doneSteps).get(0);
+    }
+
+    public static ArrayList<Character> findCanBeginSteps(Map<Character, Set<Character>> data, Set<Character> doneSteps){
         ArrayList<Character> canBeginSteps = new ArrayList<>();
 
         for (Map.Entry<Character, Set<Character>> entry : data.entrySet()){
@@ -161,10 +181,8 @@ public class Day7 {
         }
 
         canBeginSteps.sort((a, b) -> a.compareTo(b));
-        if (canBeginSteps.size() == 0) {
-            return null;
-        }
-        return canBeginSteps.get(0);
+
+        return canBeginSteps;
     }
 
 
