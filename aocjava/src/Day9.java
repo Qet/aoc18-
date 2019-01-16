@@ -60,6 +60,22 @@ class MarbleCircle{
         return marbles.get(currentMarbleIndex);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<marbles.size();i++){
+            String s;
+            if (i == currentMarbleIndex){
+                s = "(" + marbles.get(i).toString() + ")";
+            }
+            else{
+                s = marbles.get(i).toString();
+            }
+            sb.append(String.format("%1$-" + 4 + "s", s));
+        }
+        return sb.toString();
+    }
+
     private int currentMarbleIndex;
     private LinkedList<Integer> marbles = new LinkedList<>();
 
@@ -102,6 +118,8 @@ public class Day9 {
                 currentPlayer++;
                 if (currentPlayer >= PLAYERS)
                     currentPlayer = 0;
+
+                System.out.println("[" + currentMarbleValue + "]: " + m);
             }
 
             int maxScore = 0;
