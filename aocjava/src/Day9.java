@@ -37,19 +37,12 @@ class MarbleCircle{
     public int calcIndex(int currentIndex, int offset){
         int ret = currentIndex + offset;
 
-        if (ret >= marbles.size()){
+        if (ret > marbles.size()){
             int wrapAround = (ret / marbles.size()) * marbles.size();
             return ret - wrapAround;
         }
         else if (ret < 0){
-            int wrapAround = (ret / marbles.size()) * marbles.size();
-            if (ret - wrapAround < 0){
-                return ret - wrapAround + marbles.size();
-            }
-            else{
-                return ret - wrapAround;
-            }
-
+            return ret + marbles.size();
         }
         else {
             return ret;
@@ -71,7 +64,7 @@ class MarbleCircle{
             else{
                 s = marbles.get(i).toString();
             }
-            sb.append(String.format("%1$-" + 4 + "s", s));
+            sb.append(String.format("%1$-" + 12 + "s", s));
         }
         return sb.toString();
     }
