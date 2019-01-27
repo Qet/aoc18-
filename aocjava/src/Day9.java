@@ -17,11 +17,12 @@ class MarbleCircle{
             currentMarbleIndex = marbles.size() - 1;
         }
         else if (value % 23 == 0){
+            points += value;  // keep the current marble and add it to your score.
             int extraMarble = calcIndex(currentMarbleIndex, -7);
             points += marbles.get(extraMarble);
             marbles.remove(extraMarble);
-            currentMarbleIndex = calcIndex(extraMarble, 0);
-            points += 23;
+            currentMarbleIndex = extraMarble;
+
         }
         else{
             int insertedPosition = calcIndex(currentMarbleIndex, 2);
@@ -112,7 +113,7 @@ public class Day9 {
                 if (currentPlayer >= PLAYERS)
                     currentPlayer = 0;
 
-                System.out.println("[" + currentMarbleValue + "]: " + m);
+                //System.out.println("[" + currentMarbleValue + "]: " + m);
             }
 
             int maxScore = 0;
