@@ -1,11 +1,6 @@
-import java.util.LinkedList;
 import java.util.Scanner;
 
 class MarbleCircle{
-
-    public MarbleCircle(){
-
-    }
 
     public int playMarble(int value){
         //returns the points for the play
@@ -13,7 +8,7 @@ class MarbleCircle{
         int points = 0;
 
         if (marbles.size() <= 1){
-            marbles.add(value);
+            marbles.add(value, marbles.size());
             currentMarbleIndex = marbles.size() - 1;
         }
         else if (value % 23 == 0){
@@ -70,7 +65,8 @@ class MarbleCircle{
     }
 
     private int currentMarbleIndex;
-    private LinkedList<Integer> marbles = new LinkedList<>();
+    //private LinkedList<Integer> marbles = new LinkedList<>();
+    private TowerList marbles = new TowerList(10);
 
 }
 
@@ -114,7 +110,7 @@ public class Day9 {
 
                 System.out.println("[" + currentMarbleValue + "]: " + m);
             }
-
+            
             int maxScore = 0;
             for (int i = 0; i < PLAYERS; i++) {
                 if (scores[i] > maxScore)

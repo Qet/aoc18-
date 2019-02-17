@@ -1,0 +1,17 @@
+instead of 1 linkedlist or 1 array list, use a collection of N of them.
+when doing an add at index n, skip forward to the right list (by querying the size), then add to that list.
+
+average case add would be: N/2 + T/2N operations.
+where T is total number of items
+
+N = 3.
+[0]
+[1]
+[1, 1]
+[1, 1, 1]
+[2, 1, 1]
+[2, 2, 1]
+...
+
+add first by spreading out and creating new lists
+then down by appending/inserting to/in those lists.

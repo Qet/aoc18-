@@ -1,14 +1,14 @@
-import java.util.LinkedList;
+import java.util.Random;
 
 public class Day9Test {
     public static void main(String[] args) {
-        LinkedList<Integer> l = new LinkedList<>();
-        l.add(1);
-        l.add(2);
-        l.add(3);
 
-        l.add(3, 55);
+        TowerList t = new TowerList(3);
+        Random r = new Random();
+        t.add(0, 0);
+        for(int i=1;i<10;i++){
+            t.add(r.nextInt(i), i);
+        }
 
-        System.out.println(l);
     }
 }
