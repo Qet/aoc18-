@@ -98,7 +98,7 @@ public class Day9 {
 
             System.out.println("Calc with " + PLAYERS + " players, and " + LAST_MARBLE + " marbles.");
 
-            int[] scores = new int[PLAYERS];
+            long[] scores = new long[PLAYERS];
             int currentMarbleValue = 0;
             int currentPlayer = 0;
 
@@ -110,9 +110,13 @@ public class Day9 {
                     currentPlayer = 0;
 
                 //System.out.println("[" + currentMarbleValue + "]: " + m);
+                if (currentMarbleValue % 10000 == 0){
+                    System.out.println(Math.round(100d * currentMarbleValue / LAST_MARBLE) + " % complete");
+
+                }
             }
-            
-            int maxScore = 0;
+
+            long maxScore = 0;
             for (int i = 0; i < PLAYERS; i++) {
                 if (scores[i] > maxScore)
                     maxScore = scores[i];

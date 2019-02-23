@@ -50,11 +50,19 @@ public class TowerList {
         if (pos > size())
             throw new IndexOutOfBoundsException("inserting into existing tower - index out of bounds");
 
+        if (pos == size()){
+            TowerSearchResult ret = new TowerSearchResult();
+            ArrayList<Integer> lastTower = data.get(data.size() - 1);
+            ret.pos = lastTower.size();
+            ret.tower = lastTower;
+            return ret;
+        }
+
         int curTowerPos = pos;
 
         for(ArrayList<Integer> curTower : data){
             int nextTowerPos = curTowerPos - curTower.size();
-            if (nextTowerPos <= 0){  //Then we have found which tower to add to.
+            if (nextTowerPos < 0){  //Then we have found which tower to add to.
                 TowerSearchResult ret = new TowerSearchResult();
                 ret.pos = curTowerPos;
                 ret.tower = curTower;
