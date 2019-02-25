@@ -1,9 +1,10 @@
 
 class Grid{
-    public Grid(int serial) {
+
+    public Grid(int serial, int dimensions) {
         this.serial = serial;
-        this.dimensions = 300 + 1; //one-based indexing system.
-        theGrid = new int[dimensions][dimensions];
+        this.dimensions = dimensions + 1; //one-based indexing system.
+        theGrid = new int[this.dimensions][this.dimensions];
         populateGrid();
     }
 
@@ -15,22 +16,17 @@ class Grid{
         }
     }
 
-    private int digitValue(int arg, int digit){
-        //digit: 1 = first digit, 2 = second, etc.
-        return (arg / (1 << (digit - 1))) % 10;
-    }
-
     private int unitCellPower(int x, int y){
         int rackID = x + 10;
         int powerLevel = rackID * y;
         powerLevel += serial;
         powerLevel *= rackID;
-        powerLevel = digitValue(powerLevel, 3);  //Hundreds digit
+        powerLevel = (powerLevel / 100) % 10;  //Hundreds digit
         powerLevel -= 5;
         return powerLevel;
     }
 
-    private int fuelCellPower(int x, int y){
+    public int fuelCellPower(int x, int y){
         final int subGridDimensions = 3;
 
         if (x < 1 || y < 1 ||
@@ -53,11 +49,40 @@ class Grid{
 
 }
 
+class GridResult{
+    public GridResult(int x, int y, int val) {
+        this.x = x;
+        this.y = y;
+        this.val = val;
+    }
+
+    public int x;
+    public int y;
+    public int val;
+}
+
 
 
 public class Day11 {
     public static void main(String[] args) {
-        Grid g = new Grid(8);
+
+        final int dimensions = 300;
+        final int serial = 18;
+        Grid g = new Grid(serial, dimensions);
+
+        GridResult bestResult = new GridResult(0,0,0);
+        for(int i=1; i <= dimensions; i++){
+            for(int j=1;j <= dimensions; j++){
+                int curPower = g.fuelCellPower(i, j);
+                if (curPower > bestResult.val){
+                    bestResult = new GridResult(i, j, curPower);
+                }
+            }
+        }
+
+        System.out.println("[Part 1]: Most powerful grid at: (" +
+                bestResult.x + ", " + bestResult.y + ")" +
+                " Power: " + bestResult.val);
 
     }
 }
