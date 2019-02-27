@@ -23,12 +23,17 @@ class PotLine{
         }
     }
 
+    public long sumPotsWithPlants(){
+        return currentPots.stream().filter(c -> (c == '#')).count();
+    }
+
     @Override
     public String toString() {
         return currentPots.stream().map(Object::toString).collect(Collectors.joining());
     }
 
     public void applyRules(ArrayList<Rule> rules){
+        ensureZeroPadding();
         nextPots = (ArrayList<Character>)currentPots.clone();
 
         for(Rule r : rules){
@@ -41,7 +46,7 @@ class PotLine{
     private void applyOneRule(Rule rule){
         for(int i=0; i < currentPots.size() - RULE_SIZE; i++){
             String currentSubstring = getCurrentSubstring(i);
-            if (rule.from == currentSubstring){
+            if (rule.from.equals(currentSubstring)){
                 int potIndex = i + 2;  //In the middle of the 5 pots.
                 nextPots.set(potIndex, rule.to);
             }
@@ -73,6 +78,7 @@ class PotLine{
 
 }
 
+
 public class Day12 {
 /*
 # = has plant
@@ -84,7 +90,7 @@ public class Day12 {
         InputReader ir = new InputReader(12);
         ArrayList<String> lines = ir.getLines();
 
-        String initialState = lines.get(0);
+        String initialState = lines.get(0).replace("initial state: ", "");
 
         //Remove the top 2 lines.
         lines.remove(0);
@@ -93,10 +99,14 @@ public class Day12 {
         ArrayList<Rule> rules = parseRules(lines);
 
         PotLine potLine = new PotLine(initialState);
-        for(int i=0;i < 20; i++) {
+        final int GENERATIONS = 20;
+        for(int i=0;i <= GENERATIONS ; i++) {
             System.out.printf("%02d: %s%n", i, potLine);
             potLine.applyRules(rules);
         }
+
+        System.out.println("[Part 1]: Num pots with plants after " + GENERATIONS  +
+                " generations: " + potLine.sumPotsWithPlants());
 
     }
 

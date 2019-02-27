@@ -7,7 +7,11 @@ import java.util.stream.Stream;
 
 public class InputReader {
     public InputReader(int day){
-        this.fileName = "./inputs/input" + day + ".txt";
+        this("input" + day + ".txt");
+    }
+
+    public InputReader(String file){
+        this.fileName = "./inputs/" + file;
         this.fileLines = new ArrayList<String>();
         Read();
     }
