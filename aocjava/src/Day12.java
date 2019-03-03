@@ -27,6 +27,16 @@ class PotLine{
         return currentPots.stream().filter(c -> (c == '#')).count();
     }
 
+    public int sumPotPlantIndices(){
+        int sum = 0;
+        for(int i=0;i<currentPots.size();i++){
+            int potIndex = i + firstPotIndex;
+            if (currentPots.get(i) == '#')
+                sum += potIndex;
+        }
+        return sum;
+    }
+
     @Override
     public String toString() {
         return currentPots.stream().map(Object::toString).collect(Collectors.joining());
@@ -60,19 +70,24 @@ class PotLine{
     }
 
     private void ensureZeroPadding(){
-        //pad 2 dots at start and end minimum
-        while(currentPots.get(0) != '.' || currentPots.get(1) != '.'){
+        final int PAD_AMOUNT = 5;
+        while(currentPots.subList(0, PAD_AMOUNT).contains('#')){
             currentPots.add(0, '.');
-            startIndex--;
+            firstPotIndex--;
         }
 
-        while(currentPots.get(currentPots.size() - 2) != '.' ||
-                currentPots.get(currentPots.size() - 1) != '.'){
+
+        while(currentPots.subList(currentPots.size() - PAD_AMOUNT, currentPots.size() - 1)
+            .contains('#')){
             currentPots.add('.');
         }
     }
 
-    private int startIndex = 0;
+    public int getFirstPotIndex() {
+        return firstPotIndex;
+    }
+
+    private int firstPotIndex = 0;
     private ArrayList<Character> currentPots = new ArrayList<>();
     private ArrayList<Character> nextPots = new ArrayList<>();
 
@@ -101,12 +116,43 @@ public class Day12 {
         PotLine potLine = new PotLine(initialState);
         final int GENERATIONS = 20;
         for(int i=0;i <= GENERATIONS ; i++) {
-            System.out.printf("%02d: %s%n", i, potLine);
-            potLine.applyRules(rules);
+            System.out.printf("[d %02d] [st %02d] [pl: %d]: %s%n", i, potLine.getFirstPotIndex(),
+                    potLine.sumPotsWithPlants(), potLine);
+            if (i != GENERATIONS)
+                potLine.applyRules(rules);
         }
 
-        System.out.println("[Part 1]: Num pots with plants after " + GENERATIONS  +
-                " generations: " + potLine.sumPotsWithPlants());
+        System.out.println("[Part 1]: Sum indices of pots with plants after " + GENERATIONS  +
+                " generations: " + potLine.sumPotPlantIndices());
+
+    }
+
+
+    void doPart2(){
+        InputReader ir = new InputReader(12);
+        ArrayList<String> lines = ir.getLines();
+
+        String initialState = lines.get(0).replace("initial state: ", "");
+
+        //Remove the top 2 lines.
+        lines.remove(0);
+        lines.remove(0);
+
+        ArrayList<Rule> rules = parseRules(lines);
+
+        PotLine potLine = new PotLine(initialState);
+        final int GENERATIONS = 200;
+        for(int i=0;i <= GENERATIONS ; i++) {
+            System.out.printf("[d %02d] [st %02d] [pl: %d]: %s%n", i, potLine.getFirstPotIndex(),
+                    potLine.sumPotsWithPlants(), potLine);
+            if (i != GENERATIONS)
+                potLine.applyRules(rules);
+        }
+
+        System.out.println("[Part 2]: Sum of indices after 50,000,000,000 generations: " +
+                ((long)potLine.sumPotPlantIndices() +
+                (50_000_000_000l - (long)GENERATIONS) * (long)potLine.sumPotsWithPlants()));
+
 
     }
 
@@ -121,6 +167,7 @@ public class Day12 {
     public static void main(String[] args) {
         Day12 day12 = new Day12();
         day12.doPart1();
+        day12.doPart2();
     }
 
 }
