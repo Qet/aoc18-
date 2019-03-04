@@ -9,16 +9,9 @@ class Mine{
 
 class Cart{
 
+    
 
-    private void rotateNextExit(){
-        nextExit++;
-        if (nextExit > 3){
-            nextExit = 1;
-        }
-    }
-
-    //which exit the cart will take next, clockwise from the entry point.
-    int nextExit = 1;
+    Directions nextTurn = Directions.East;
 
     //where the cart is
     Square currentSquare;
@@ -37,13 +30,13 @@ enum Directions{
         Directions[] values = Directions.values();
         int currentValue = currentDir.ordinal();
         int ret;
-        if (currentValue == Directions.values().length - 1){
+        if (currentValue == values.length - 1){
             ret = 0;
         }
         else{
             ret = currentValue + 1;
         }
-        return (Directions)ret;
+        return values[ret];
     }
 }
 
