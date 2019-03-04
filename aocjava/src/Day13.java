@@ -1,17 +1,95 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 class Mine{
 
-    int size;  //Width and height (it's square)
+    /*
+
+    \
+    / = S, E
+    - = W, E
+    | = N, S
+    + = NESW
+    < = cart, facing W
+    > = cart, facing E
+    ^ = cart, facing N
+    v = cart, facing S
+
+     */
+
+    final int SIZE = 200;  //Width and height (it's square)
+
+    private void LinkParseLine(String line, int currentGridRow){
+        for (int i = 0; i < line.length(); i++) {
+            char curChar = line.charAt(i);
+            switch (curChar){
+                case '+':
+                case '/':
+                case '\\':
+                case '-':
+                case '|':
+                case '<':
+                case '>':
+                case '^':
+                case 'v':
+                default: throw new IllegalArgumentException("Unrecognised character to parse: " + curChar);
+            }
+        }
+    }
+
+    private void FirstParseLine(String line, Square[] currentGridRow){
+        for (int i = 0; i < line.length(); i++) {
+            char curChar = line.charAt(i);
+            Square currentSquare = null;
+            switch (curChar){
+                case '+':
+                    currentSquare = new Square(true);
+                    break;
+                case '/':
+                case '\\':
+                case '-':
+                case '|':
+                case '<':
+                case '>':
+                case '^':
+                case 'v':
+                    currentSquare = new Square(true);
+                    break;
+
+                default: throw new IllegalArgumentException("Unrecognised character to parse: " + curChar);
+
+            }
+            currentGridRow[i] = currentSquare;
+        }
+    }
+
+    public Mine(){
+        InputReader ir = new InputReader(13);
+
+        ArrayList<String> lines = ir.getLines();
+
+        for (int i = 0; i < lines.size(); i++) {
+            ParseLine(lines.get(i), grid[i]);
+        }
+
+    }
+
+    //these will all be null at first
+    private Square[][] grid = new Square[SIZE][SIZE];
 
 }
 
 class Cart{
 
-    
+    private void incrementNextTurn(){
+        nextTurnQuarters++;
+        if (nextTurnQuarters > 3){
+            nextTurnQuarters = 1;
+        }
+    }
 
-    Directions nextTurn = Directions.East;
+    int nextTurnQuarters = 1;
 
     //where the cart is
     Square currentSquare;
