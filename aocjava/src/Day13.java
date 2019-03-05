@@ -20,11 +20,56 @@ class Mine{
 
     final int SIZE = 200;  //Width and height (it's square)
 
+    private void basicGridBoundsCheck(int row, int col){
+        if (row < 0 || row >= SIZE ||
+            col < 0 || col >= SIZE){
+            throw new IllegalArgumentException("row or col out of range!");
+        }
+    }
+
+    private Square getSquareNorthOf(int row, int col){
+        basicGridBoundsCheck(row, col);
+        if (row == 0){
+            throw new IllegalArgumentException("Cannot request north of the top most row");
+        }
+        return grid[row - 1][col];
+    }
+
+    private Square getSquareEastOf(int row, int col){
+        basicGridBoundsCheck(row, col);
+        if (col == SIZE - 1){
+            throw new IllegalArgumentException("Cannot request east of the right most column");
+        }
+        return grid[row][col + 1];
+    }
+
+    private Square getSquareSouthOf(int row, int col){
+        basicGridBoundsCheck(row, col);
+        if (row == SIZE - 1){
+            throw new IllegalArgumentException("Cannot request south of the bottom most row");
+        }
+        return grid[row + 1][col];
+    }
+
+    private Square getSquareWestOf(int row, int col){
+        basicGridBoundsCheck(row, col);
+        if (col == 0){
+            throw new IllegalArgumentException("Cannot request west of the left most column");
+        }
+        return grid[row][col - 1];
+    }
+
     private void LinkParseLine(String line, int currentGridRow){
-        for (int i = 0; i < line.length(); i++) {
-            char curChar = line.charAt(i);
+        for (int j = 0; j < line.length(); j++) {
+            char curChar = line.charAt(j);
+            Square curSquare = grid[currentGridRow][j];
             switch (curChar){
                 case '+':
+                    Square northSq = grid[currentGridRow - 1][j];
+                    Square southSq = grid[currentGridRow + 1][j];
+                    Square eastSq = grid[currentGridRow][j + 1];
+                    Square westSq = grid[currentGridRow][j - 1];
+
                 case '/':
                 case '\\':
                 case '-':
@@ -38,29 +83,18 @@ class Mine{
         }
     }
 
-    private void FirstParseLine(String line, Square[] currentGridRow){
-        for (int i = 0; i < line.length(); i++) {
-            char curChar = line.charAt(i);
-            Square currentSquare = null;
-            switch (curChar){
-                case '+':
-                    currentSquare = new Square(true);
-                    break;
-                case '/':
-                case '\\':
-                case '-':
-                case '|':
-                case '<':
-                case '>':
-                case '^':
-                case 'v':
-                    currentSquare = new Square(true);
-                    break;
 
-                default: throw new IllegalArgumentException("Unrecognised character to parse: " + curChar);
-
+    final String validChars = "+-|/\\<>v^";
+    // Create squares wherever there's a piece of track in the mine.
+    void initialiseGrid(ArrayList<String> lines){
+        for (int i = 0; i < lines.size(); i++) {
+            String curLine = lines.get(i);
+            for (int j = 0; j < curLine.length(); j++) {
+                String curChar = curLine.substring(j, j + 1);
+                if (validChars.contains(curChar)){
+                    grid[i][j] = new Square(false);
+                }
             }
-            currentGridRow[i] = currentSquare;
         }
     }
 
@@ -69,9 +103,7 @@ class Mine{
 
         ArrayList<String> lines = ir.getLines();
 
-        for (int i = 0; i < lines.size(); i++) {
-            ParseLine(lines.get(i), grid[i]);
-        }
+        initialiseGrid(lines);
 
     }
 
@@ -156,4 +188,8 @@ public class Day13 {
 
 
      */
+
+    public static void main(String[] args) {
+        Mine mine = new Mine();
+    }
 }
