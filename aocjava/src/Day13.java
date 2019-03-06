@@ -2,6 +2,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+class SquareExitResult{
+    public SquareExitResult(Square exitSquare, Directions direction) {
+        this.exitSquare = exitSquare;
+        this.direction = direction;
+    }
+
+    public Square exitSquare;
+    public Directions direction;
+}
+
+
 class Mine{
 
     /*
@@ -18,6 +29,7 @@ class Mine{
 
      */
 
+
     final int SIZE = 200;  //Width and height (it's square)
 
     private void basicGridBoundsCheck(int row, int col){
@@ -27,36 +39,36 @@ class Mine{
         }
     }
 
-    private Square getSquareNorthOf(int row, int col){
+    private SquareExitResult getSquareNorthOf(int row, int col){
         basicGridBoundsCheck(row, col);
         if (row == 0){
             throw new IllegalArgumentException("Cannot request north of the top most row");
         }
-        return grid[row - 1][col];
+        return new SquareExitResult(grid[row - 1][col], Directions.North);
     }
 
-    private Square getSquareEastOf(int row, int col){
+    private SquareExitResult getSquareEastOf(int row, int col){
         basicGridBoundsCheck(row, col);
         if (col == SIZE - 1){
             throw new IllegalArgumentException("Cannot request east of the right most column");
         }
-        return grid[row][col + 1];
+        return new SquareExitResult(grid[row][col + 1], Directions.East);
     }
 
-    private Square getSquareSouthOf(int row, int col){
+    private SquareExitResult getSquareSouthOf(int row, int col){
         basicGridBoundsCheck(row, col);
         if (row == SIZE - 1){
             throw new IllegalArgumentException("Cannot request south of the bottom most row");
         }
-        return grid[row + 1][col];
+        return new SquareExitResult(grid[row + 1][col], Directions.South);
     }
 
-    private Square getSquareWestOf(int row, int col){
+    private SquareExitResult getSquareWestOf(int row, int col){
         basicGridBoundsCheck(row, col);
         if (col == 0){
             throw new IllegalArgumentException("Cannot request west of the left most column");
         }
-        return grid[row][col - 1];
+        return new SquareExitResult(grid[row][col - 1], Directions.West);
     }
 
     private void LinkParseLine(String line, int currentGridRow){
@@ -65,20 +77,40 @@ class Mine{
             Square curSquare = grid[currentGridRow][j];
             switch (curChar){
                 case '+':
-                    Square northSq = grid[currentGridRow - 1][j];
-                    Square southSq = grid[currentGridRow + 1][j];
-                    Square eastSq = grid[currentGridRow][j + 1];
-                    Square westSq = grid[currentGridRow][j - 1];
-
+                    curSquare.addDirectionalExit(getSquareNorthOf(currentGridRow, j));
+                    curSquare.addDirectionalExit(getSquareEastOf(currentGridRow, j));
+                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
+                    curSquare.addDirectionalExit(getSquareWestOf(currentGridRow, j));
+                    break;
                 case '/':
+                    curSquare.addDirectionalExit(getSquareEastOf(currentGridRow, j));
+                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
+                    break;
                 case '\\':
-                case '-':
-                case '|':
+                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
+                    curSquare.addDirectionalExit(getSquareWestOf(currentGridRow, j));
+                    break;
+
+                /*
+                There a slight issue here, because a '<' or a '>' could occur on a corner or an intersection.
+                But it doesn't for the input data at least, so we're fine. Ditto on '^' and 'v'
+                 */
                 case '<':
                 case '>':
+                case '-':
+                    curSquare.addDirectionalExit(getSquareEastOf(currentGridRow, j));
+                    curSquare.addDirectionalExit(getSquareWestOf(currentGridRow, j));
+                    break;
                 case '^':
                 case 'v':
-                default: throw new IllegalArgumentException("Unrecognised character to parse: " + curChar);
+                case '|':
+                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
+                    curSquare.addDirectionalExit(getSquareNorthOf(currentGridRow, j));
+                    break;
+                case ' ':
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unrecognised character to parse: " + curChar);
             }
         }
     }
@@ -104,6 +136,11 @@ class Mine{
         ArrayList<String> lines = ir.getLines();
 
         initialiseGrid(lines);
+
+        for (int i = 0; i < lines.size(); i++) {
+            String curLine = lines.get(i);
+            LinkParseLine(curLine, i);
+        }
 
     }
 
@@ -157,8 +194,8 @@ class Square{
         this.exits = new HashMap<>();
     }
 
-    public void addExit(Square exit, Directions direction){
-        exits.put(direction, exit);
+    public void addDirectionalExit(SquareExitResult exitDetails){
+        exits.put(exitDetails.direction, exitDetails.exitSquare);
     }
 
     public Square getExit(Directions direction){
