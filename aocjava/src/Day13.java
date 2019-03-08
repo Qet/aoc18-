@@ -71,46 +71,109 @@ class Mine{
         return new SquareExitResult(grid[row][col - 1], Directions.West);
     }
 
-    private void LinkParseLine(String line, int currentGridRow){
-        for (int j = 0; j < line.length(); j++) {
-            char curChar = line.charAt(j);
-            Square curSquare = grid[currentGridRow][j];
-            switch (curChar){
-                case '+':
-                    curSquare.addDirectionalExit(getSquareNorthOf(currentGridRow, j));
-                    curSquare.addDirectionalExit(getSquareEastOf(currentGridRow, j));
-                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
-                    curSquare.addDirectionalExit(getSquareWestOf(currentGridRow, j));
-                    break;
-                case '/':
-                    curSquare.addDirectionalExit(getSquareEastOf(currentGridRow, j));
-                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
-                    break;
-                case '\\':
-                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
-                    curSquare.addDirectionalExit(getSquareWestOf(currentGridRow, j));
-                    break;
+
+    private boolean isSouthReflector(int row, int col){
+        char reflector = rawData[row][col];
+
+        /*
+
+        /a
+        b
+
+        b
+        \a
+
+        where a could be: + < > ^ v -
+        where b could be: + < > ^ v |
+
+         */
+
+        String possibleAnySquares = "+<>^v";
+        String possibleSideSquares = possibleAnySquares + "-";
+        String possibleVertSquares = possibleAnySquares + "|";
+
+        String sideString = String.valueOf(rawData[row][col + 1]);
+        String vertString = "";
+        if (reflector == '/'){
+            vertString = String.valueOf(rawData[row + 1][col]);
+            if (possibleSideSquares.contains(sideString) && possibleVertSquares.contains(vertString)) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else if (reflector == '\\'){
+            if (row == 0)
+                return true;
+            vertString = String.valueOf(rawData[row - 1][col]);
+            if (possibleSideSquares.contains(sideString) && possibleVertSquares.contains(vertString)) {
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else {
+            throw new RuntimeException("Shouldn't get here...");
+        }
+    }
+
+    private void parseRawData(){
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                char curChar = rawData[row][col];
+                Square curSquare = grid[row][col];
+                switch (curChar) {
+                    case '+':
+                        curSquare.addDirectionalExit(getSquareNorthOf(row, col));
+                        curSquare.addDirectionalExit(getSquareEastOf(row, col));
+                        curSquare.addDirectionalExit(getSquareSouthOf(row, col));
+                        curSquare.addDirectionalExit(getSquareWestOf(row, col));
+                        break;
+                    case '/':
+                        if (isSouthReflector(row, col)) {
+                            curSquare.addDirectionalExit(getSquareEastOf(row, col));
+                            curSquare.addDirectionalExit(getSquareSouthOf(row, col));
+                        }
+                        else{
+                            curSquare.addDirectionalExit(getSquareWestOf(row, col));
+                            curSquare.addDirectionalExit(getSquareNorthOf(row, col));
+                        }
+                        break;
+                    case '\\':
+                        if (isSouthReflector(row, col)) {
+                            curSquare.addDirectionalExit(getSquareSouthOf(row, col));
+                            curSquare.addDirectionalExit(getSquareWestOf(row, col));
+                        }
+                        else {
+                            curSquare.addDirectionalExit(getSquareNorthOf(row, col));
+                            curSquare.addDirectionalExit(getSquareEastOf(row, col));
+                        }
+                        break;
 
                 /*
                 There a slight issue here, because a '<' or a '>' could occur on a corner or an intersection.
                 But it doesn't for the input data at least, so we're fine. Ditto on '^' and 'v'
                  */
-                case '<':
-                case '>':
-                case '-':
-                    curSquare.addDirectionalExit(getSquareEastOf(currentGridRow, j));
-                    curSquare.addDirectionalExit(getSquareWestOf(currentGridRow, j));
-                    break;
-                case '^':
-                case 'v':
-                case '|':
-                    curSquare.addDirectionalExit(getSquareSouthOf(currentGridRow, j));
-                    curSquare.addDirectionalExit(getSquareNorthOf(currentGridRow, j));
-                    break;
-                case ' ':
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unrecognised character to parse: " + curChar);
+                    case '<':
+                    case '>':
+                    case '-':
+                        curSquare.addDirectionalExit(getSquareEastOf(row, col));
+                        curSquare.addDirectionalExit(getSquareWestOf(row, col));
+                        break;
+                    case '^':
+                    case 'v':
+                    case '|':
+                        curSquare.addDirectionalExit(getSquareSouthOf(row, col));
+                        curSquare.addDirectionalExit(getSquareNorthOf(row, col));
+                        break;
+                    case ' ':
+                        break;
+                    default:
+                        //throw new IllegalArgumentException("Unrecognised character to parse: " + curChar);
+                        break;
+                }
             }
         }
     }
@@ -118,34 +181,35 @@ class Mine{
 
     final String validChars = "+-|/\\<>v^";
     // Create squares wherever there's a piece of track in the mine.
-    void initialiseGrid(ArrayList<String> lines){
-        for (int i = 0; i < lines.size(); i++) {
-            String curLine = lines.get(i);
-            for (int j = 0; j < curLine.length(); j++) {
-                String curChar = curLine.substring(j, j + 1);
-                if (validChars.contains(curChar)){
-                    grid[i][j] = new Square(false);
+    void initialiseGridAndRawData(ArrayList<String> lines){
+        for (int row = 0; row < lines.size(); row++) {
+            String curLine = lines.get(row);
+            for (int col = 0; col < curLine.length(); col++) {
+                String curCharStr = curLine.substring(col, col + 1);
+                char curChar = curLine.charAt(col);
+                if (validChars.contains(curCharStr)){
+                    grid[row][col] = new Square(false);
+                    rawData[row][col] = curChar;
                 }
             }
         }
     }
+
+
 
     public Mine(){
         InputReader ir = new InputReader(13);
 
         ArrayList<String> lines = ir.getLines();
 
-        initialiseGrid(lines);
+        initialiseGridAndRawData(lines);
 
-        for (int i = 0; i < lines.size(); i++) {
-            String curLine = lines.get(i);
-            LinkParseLine(curLine, i);
-        }
-
+        parseRawData();
     }
 
     //these will all be null at first
     private Square[][] grid = new Square[SIZE][SIZE];
+    private char[][] rawData = new char[SIZE][SIZE];
 
 }
 
