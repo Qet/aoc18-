@@ -30,6 +30,8 @@ class Mine{
      */
 
 
+    private ArrayList<Cart> carts = new ArrayList<>();
+
     final int SIZE = 200;  //Width and height (it's square)
 
     private void basicGridBoundsCheck(int row, int col){
@@ -69,6 +71,10 @@ class Mine{
             throw new IllegalArgumentException("Cannot request west of the left most column");
         }
         return new SquareExitResult(grid[row][col - 1], Directions.West);
+    }
+
+    private void makeCart(Square curSq, Square prevSq){
+        carts.add(new Cart(curSq, prevSq));
     }
 
 
@@ -119,6 +125,8 @@ class Mine{
         }
     }
 
+
+
     private void parseRawData(){
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
@@ -157,13 +165,29 @@ class Mine{
                 But it doesn't for the input data at least, so we're fine. Ditto on '^' and 'v'
                  */
                     case '<':
+                        makeCart(curSquare, getSquareEastOf(row, col).exitSquare);
+                        curSquare.addDirectionalExit(getSquareEastOf(row, col));
+                        curSquare.addDirectionalExit(getSquareWestOf(row, col));
+                        break;
                     case '>':
+                        makeCart(curSquare, getSquareWestOf(row, col).exitSquare);
+                        curSquare.addDirectionalExit(getSquareEastOf(row, col));
+                        curSquare.addDirectionalExit(getSquareWestOf(row, col));
+                        break;
                     case '-':
                         curSquare.addDirectionalExit(getSquareEastOf(row, col));
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
                         break;
                     case '^':
+                        makeCart(curSquare, getSquareSouthOf(row, col).exitSquare);
+                        curSquare.addDirectionalExit(getSquareSouthOf(row, col));
+                        curSquare.addDirectionalExit(getSquareNorthOf(row, col));
+                        break;
                     case 'v':
+                        makeCart(curSquare, getSquareNorthOf(row, col).exitSquare);
+                        curSquare.addDirectionalExit(getSquareSouthOf(row, col));
+                        curSquare.addDirectionalExit(getSquareNorthOf(row, col));
+                        break;
                     case '|':
                         curSquare.addDirectionalExit(getSquareSouthOf(row, col));
                         curSquare.addDirectionalExit(getSquareNorthOf(row, col));
@@ -214,6 +238,11 @@ class Mine{
 }
 
 class Cart{
+
+    public Cart(Square curSq, Square entrySq){
+        this.currentSquare = curSq;
+        this.entrySquare = entrySq;
+    }
 
     private void incrementNextTurn(){
         nextTurnQuarters++;
