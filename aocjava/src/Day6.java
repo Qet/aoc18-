@@ -1,3 +1,5 @@
+import InputReader.InputReader;
+
 import java.awt.*;
 import java.util.ArrayList;
 

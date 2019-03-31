@@ -1,3 +1,5 @@
+import InputReader.InputReader;
+
 class SinglePassResult{
     public SinglePassResult(){
         numReactions = 0;

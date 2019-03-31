@@ -1,17 +1,9 @@
+package Day13;
+
+import InputReader.InputReader;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-class SquareExitResult{
-    public SquareExitResult(Square exitSquare, Directions direction) {
-        this.exitSquare = exitSquare;
-        this.direction = direction;
-    }
-
-    public Square exitSquare;
-    public Directions direction;
-}
-
+import java.util.Collections;
 
 class Mine{
 
@@ -30,10 +22,8 @@ class Mine{
      */
 
 
-    private ArrayList<Cart> carts = new ArrayList<>();
 
-    final int SIZE = 200;  //Width and height (it's square)
-
+    public static final int SIZE = 200;  //Width and height (it's square)
     private void basicGridBoundsCheck(int row, int col){
         if (row < 0 || row >= SIZE ||
             col < 0 || col >= SIZE){
@@ -73,8 +63,11 @@ class Mine{
         return new SquareExitResult(grid[row][col - 1], Directions.West);
     }
 
-    private void makeCart(Square curSq, Square prevSq){
-        carts.add(new Cart(curSq, prevSq));
+    private void makeCart(Square curSq, Square prevSq, int row, int col){
+        Cart c = new Cart(curSq, prevSq);
+        c.row = row;
+        c.col = col;
+        carts.add(c);
     }
 
 
@@ -165,12 +158,12 @@ class Mine{
                 But it doesn't for the input data at least, so we're fine. Ditto on '^' and 'v'
                  */
                     case '<':
-                        makeCart(curSquare, getSquareEastOf(row, col).exitSquare);
+                        makeCart(curSquare, getSquareEastOf(row, col).exitSquare, row, col);
                         curSquare.addDirectionalExit(getSquareEastOf(row, col));
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
                         break;
                     case '>':
-                        makeCart(curSquare, getSquareWestOf(row, col).exitSquare);
+                        makeCart(curSquare, getSquareWestOf(row, col).exitSquare, row, col);
                         curSquare.addDirectionalExit(getSquareEastOf(row, col));
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
                         break;
@@ -179,12 +172,12 @@ class Mine{
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
                         break;
                     case '^':
-                        makeCart(curSquare, getSquareSouthOf(row, col).exitSquare);
+                        makeCart(curSquare, getSquareSouthOf(row, col).exitSquare, row, col);
                         curSquare.addDirectionalExit(getSquareSouthOf(row, col));
                         curSquare.addDirectionalExit(getSquareNorthOf(row, col));
                         break;
                     case 'v':
-                        makeCart(curSquare, getSquareNorthOf(row, col).exitSquare);
+                        makeCart(curSquare, getSquareNorthOf(row, col).exitSquare, row, col);
                         curSquare.addDirectionalExit(getSquareSouthOf(row, col));
                         curSquare.addDirectionalExit(getSquareNorthOf(row, col));
                         break;
@@ -201,6 +194,7 @@ class Mine{
             }
         }
     }
+
 
 
     final String validChars = "+-|/\\<>v^";
@@ -220,7 +214,6 @@ class Mine{
     }
 
 
-
     public Mine(){
         InputReader ir = new InputReader(13);
 
@@ -229,97 +222,26 @@ class Mine{
         initialiseGridAndRawData(lines);
 
         parseRawData();
+
+        SortCarts();
     }
+
+    private void SortCarts(){
+        // sort the carts in the order in which they should be processed.
+        /*
+        They do this based on their current location: carts on the top row move first (acting from left to right),
+        then carts on the second row move (again from left to right), then carts on the third row, and so on.
+        Once each cart has moved one step, the process repeats; each of these loops is called a tick.
+         */
+
+        Collections.sort(carts);
+    }
+
+
 
     //these will all be null at first
     private Square[][] grid = new Square[SIZE][SIZE];
     private char[][] rawData = new char[SIZE][SIZE];
+    private ArrayList<Cart> carts = new ArrayList<>();
 
-}
-
-class Cart{
-
-    public Cart(Square curSq, Square entrySq){
-        this.currentSquare = curSq;
-        this.entrySquare = entrySq;
-    }
-
-    private void incrementNextTurn(){
-        nextTurnQuarters++;
-        if (nextTurnQuarters > 3){
-            nextTurnQuarters = 1;
-        }
-    }
-
-    int nextTurnQuarters = 1;
-
-    //where the cart is
-    Square currentSquare;
-
-    //where the cart came from
-    Square entrySquare;
-}
-
-enum Directions{
-    North,
-    East,
-    South,
-    West;
-
-    Directions nextClockwiseDir(Directions currentDir){
-        Directions[] values = Directions.values();
-        int currentValue = currentDir.ordinal();
-        int ret;
-        if (currentValue == values.length - 1){
-            ret = 0;
-        }
-        else{
-            ret = currentValue + 1;
-        }
-        return values[ret];
-    }
-}
-
-class Square{
-
-    public Square(boolean intersection) {
-        this.intersection = intersection;
-        this.exits = new HashMap<>();
-    }
-
-    public void addDirectionalExit(SquareExitResult exitDetails){
-        exits.put(exitDetails.direction, exitDetails.exitSquare);
-    }
-
-    public Square getExit(Directions direction){
-        return exits.get(direction);
-    }
-
-    //intersections are marked with a "+"
-    public boolean isIntersection(){
-        return intersection;
-    }
-
-    //all the entries and exits from this square
-    Map<Directions, Square> exits;
-
-    boolean intersection;
-}
-
-
-public class Day13 {
-    /*
-    carts on the top row move first (acting from left to right), then carts on the second row move (again from left to right),
-
-    Each time a cart has the option to turn (by arriving at any intersection), it turns left the first time,
-    goes straight the second time, turns right the third time, and then repeats those directions
-
-        you'd like to know the location of the first crash.
-
-
-     */
-
-    public static void main(String[] args) {
-        Mine mine = new Mine();
-    }
 }

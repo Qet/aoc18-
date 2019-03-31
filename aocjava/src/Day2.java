@@ -1,3 +1,5 @@
+import InputReader.InputReader;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +78,7 @@ public class Day2 {
         }
 
         System.out.println("Checksum: " + doubleSum +
-                " x " + tripleSum + " = " +
+                " row " + tripleSum + " = " +
                 doubleSum * tripleSum);
     }
 

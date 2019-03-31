@@ -1,3 +1,5 @@
+import InputReader.InputReader;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,13 +66,13 @@ public class Day4 {
         System.out.println("[Part 1] Guard " + result.ID + " spends " + result.sleepMinsCount + " mins asleep.");
         int sleepiestMin = findSleepiestMinute(result);
         System.out.println("Sleeps the longest during minute #" + sleepiestMin);
-        System.out.println("ID x min = " + result.ID * sleepiestMin);
+        System.out.println("ID row min = " + result.ID * sleepiestMin);
 
         Guard g = findSleepiestMinuteGuard(sleepResultMap);
         System.out.println("[Part 2] Guard " + g.ID  + " spends " +
                 g.maxSleepSize + " minutes asleep during minute #" +
                 g.maxSleepMinute);
-        System.out.println("ID x minute# = " + g.ID  * g.maxSleepMinute);
+        System.out.println("ID row minute# = " + g.ID  * g.maxSleepMinute);
     }
 
     public static void sortLines(ArrayList<Line> lines){

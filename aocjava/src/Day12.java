@@ -1,3 +1,5 @@
+import InputReader.InputReader;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
