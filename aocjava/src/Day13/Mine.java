@@ -63,10 +63,11 @@ class Mine{
         return new SquareExitResult(grid[row][col - 1], Directions.West);
     }
 
-    private void makeCart(Square curSq, Square prevSq, int row, int col){
+    private void makeCart(Square curSq, Square prevSq, int row, int col, Directions facing){
         Cart c = new Cart(curSq, prevSq);
         c.row = row;
         c.col = col;
+        c.facing = facing;
         carts.add(c);
     }
 
@@ -131,8 +132,10 @@ class Mine{
                         curSquare.addDirectionalExit(getSquareEastOf(row, col));
                         curSquare.addDirectionalExit(getSquareSouthOf(row, col));
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
+                        curSquare.intersection = true;
                         break;
                     case '/':
+                        curSquare.forwardslash = true;
                         if (isSouthReflector(row, col)) {
                             curSquare.addDirectionalExit(getSquareEastOf(row, col));
                             curSquare.addDirectionalExit(getSquareSouthOf(row, col));
@@ -143,6 +146,7 @@ class Mine{
                         }
                         break;
                     case '\\':
+                        curSquare.backslash = true;
                         if (isSouthReflector(row, col)) {
                             curSquare.addDirectionalExit(getSquareSouthOf(row, col));
                             curSquare.addDirectionalExit(getSquareWestOf(row, col));
@@ -158,12 +162,12 @@ class Mine{
                 But it doesn't for the input data at least, so we're fine. Ditto on '^' and 'v'
                  */
                     case '<':
-                        makeCart(curSquare, getSquareEastOf(row, col).exitSquare, row, col);
+                        makeCart(curSquare, getSquareEastOf(row, col).exitSquare, row, col, Directions.West);
                         curSquare.addDirectionalExit(getSquareEastOf(row, col));
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
                         break;
                     case '>':
-                        makeCart(curSquare, getSquareWestOf(row, col).exitSquare, row, col);
+                        makeCart(curSquare, getSquareWestOf(row, col).exitSquare, row, col, Directions.East);
                         curSquare.addDirectionalExit(getSquareEastOf(row, col));
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
                         break;
@@ -172,12 +176,12 @@ class Mine{
                         curSquare.addDirectionalExit(getSquareWestOf(row, col));
                         break;
                     case '^':
-                        makeCart(curSquare, getSquareSouthOf(row, col).exitSquare, row, col);
+                        makeCart(curSquare, getSquareSouthOf(row, col).exitSquare, row, col, Directions.North);
                         curSquare.addDirectionalExit(getSquareSouthOf(row, col));
                         curSquare.addDirectionalExit(getSquareNorthOf(row, col));
                         break;
                     case 'v':
-                        makeCart(curSquare, getSquareNorthOf(row, col).exitSquare, row, col);
+                        makeCart(curSquare, getSquareNorthOf(row, col).exitSquare, row, col, Directions.South);
                         curSquare.addDirectionalExit(getSquareSouthOf(row, col));
                         curSquare.addDirectionalExit(getSquareNorthOf(row, col));
                         break;
@@ -236,6 +240,73 @@ class Mine{
 
         Collections.sort(carts);
     }
+
+
+
+
+    public void stepCarts(){
+        // step all the carts forward.
+
+        /*
+
+        all carts have a direction. look at the square ahead in that direction, if it's not straight then the cart
+        will have to turn.
+
+        either it will be a forced run (such as a right angle \ or / ) or it will be an intersection, in which
+        case the special turning rules will need to be applied.
+
+        Each time a cart has the option to turn (by arriving at any intersection), it turns left the first time,
+        goes straight the second time, turns right the third time
+
+         */
+
+        for (Cart c : carts){
+            Square nextSquare = c.currentSquare.exits.get(c.facing);
+
+            if (nextSquare.forwardslash){  //  " / "
+                if (c.facing == Directions.North){
+                    c.facing = Directions.East;
+                }
+                else if (c.facing == Directions.South){
+                    c.facing = Directions.West;
+                }
+                else if (c.facing == Directions.East){
+                    c.facing = Directions.North;
+                }
+                else if (c.facing == Directions.West){
+                    c.facing = Directions.South;
+                }
+                else{
+                    throw new IllegalStateException();
+                }
+
+            }
+            else if (nextSquare.backslash){ // " \ "
+                if (c.facing == Directions.North){
+                    c.facing = Directions.West;
+                }
+                else if (c.facing == Directions.South){
+                    c.facing = Directions.East;
+                }
+                else if (c.facing == Directions.East){
+                    c.facing = Directions.South;
+                }
+                else if (c.facing == Directions.West){
+                    c.facing = Directions.North;
+                }
+                else{
+                    throw new IllegalStateException();
+                }
+            }
+            else if (nextSquare.intersection){
+                c.nextTurnQuarters
+            }
+
+
+        }
+
+    }
+
 
 
 

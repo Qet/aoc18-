@@ -26,5 +26,9 @@ class Square{
     //all the entries and exits from this square
     Map<Directions, Square> exits;
 
-    boolean intersection;
+    public boolean intersection = false;
+
+    public boolean forwardslash = false;
+    public boolean backslash = false;
+
 }

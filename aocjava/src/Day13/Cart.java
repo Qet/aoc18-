@@ -5,6 +5,7 @@ class Cart implements Comparable{
     public Cart(Square curSq, Square entrySq){
         this.currentSquare = curSq;
         this.entrySquare = entrySq;
+        this.facing = facing;
     }
 
     private void incrementNextTurn(){
@@ -25,6 +26,7 @@ class Cart implements Comparable{
     public int row;
     public int col;
 
+    public Directions facing;
 
     @Override
     public int compareTo(Object o) {
