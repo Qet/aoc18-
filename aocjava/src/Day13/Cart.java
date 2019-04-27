@@ -9,13 +9,13 @@ class Cart implements Comparable{
     }
 
     private void incrementNextTurn(){
-        nextTurnQuarters++;
-        if (nextTurnQuarters > 3){
-            nextTurnQuarters = 1;
+        nextTurn++;
+        if (nextTurn > 3){
+            nextTurn = 1;
         }
     }
 
-    int nextTurnQuarters = 1;
+    int nextTurn = 1;
 
     //where the cart is
     Square currentSquare;

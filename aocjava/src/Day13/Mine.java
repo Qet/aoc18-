@@ -23,7 +23,7 @@ class Mine{
 
 
 
-    public static final int SIZE = 200;  //Width and height (it's square)
+        public static final int SIZE = 200;  //Width and height (it's square)
     private void basicGridBoundsCheck(int row, int col){
         if (row < 0 || row >= SIZE ||
             col < 0 || col >= SIZE){
@@ -299,7 +299,9 @@ class Mine{
                 }
             }
             else if (nextSquare.intersection){
-                c.nextTurnQuarters
+                if (c.nextTurn == 1){
+
+                }
             }
 
 
