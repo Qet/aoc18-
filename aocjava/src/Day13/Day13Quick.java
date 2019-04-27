@@ -199,6 +199,8 @@ public final class Day13Quick {
     boolean moveCarts() {
         Collections.sort(carts, new CartComparator());
 
+        List<Cart> toRemove = new ArrayList<>();
+
         for(Cart c : carts) {
             switch (c.currentFacing) {
                 case WEST:
@@ -238,23 +240,41 @@ public final class Day13Quick {
                 c.rotateIntersectionDirection();
             }
 
-            if (checkCrashes(c))
-                return false;  //crash!
+            toRemove.addAll(checkCrashes(c));
+
         }
+
+        carts.removeAll(toRemove);
+
         return true;
     }
 
+    boolean checkNumCarts(){
+        if (carts.size() == 1){
+            Cart c = carts.get(0);
+            System.out.println("One cart left at: (" + c.col + ", " + c.row + ')');
+            return true;
+        }
+        return false;
+    }
+
     //returns true if there's a crash.
-    boolean checkCrashes(Cart checkAgainst){
+    List<Cart> checkCrashes(Cart checkAgainst){
+
+        List<Cart> toRemove = new ArrayList<>();
+
         for(Cart c : carts) {
             if (c != checkAgainst){
                 if (c.col == checkAgainst.col && c.row == checkAgainst.row){
                     System.out.println("Crash at (" + c.col + ", " + c.row + ')');
-                    return true;
+                    toRemove.add(c);
+                    toRemove.add(checkAgainst);
+                    break;
                 }
             }
         }
-        return false;
+
+        return toRemove;
     }
 
     void initialiseData(){
@@ -266,20 +286,16 @@ public final class Day13Quick {
     }
 
     public static void main(String[] args) {
-        try {
-            Day13Quick d = new Day13Quick();
-            d.initialiseData();
-            d.loadData();
-            //d.printData();
-            while (d.moveCarts()) {
-             //   System.in.read();
-              //  d.printData();
-            }
-            d.printData();
+        Day13Quick d = new Day13Quick();
+        d.initialiseData();
+        d.loadData();
+        //d.printData();
+        while (d.moveCarts()) {
+          //  d.printData();
+            if (d.checkNumCarts())
+                break;
         }
-        catch (Exception e){
-            System.out.println("exception");
-        }
+        d.printData();
     }
 }
 
