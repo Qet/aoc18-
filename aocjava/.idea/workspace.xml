@@ -8,7 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97ba61e-0837-4ccb-bb07-e88e6ad33b2e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Day13/Day13Quick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day13/Day13Quick.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Day14.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,56 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Day13/Day13Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Day13/Day13Quick.java">
+        <entry file="file://$PROJECT_DIR$/src/Day14.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="876">
-              <caret line="246" column="34" selection-start-line="246" selection-start-column="34" selection-end-line="246" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/inputs/input13test.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/InputReader/InputReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Day13/Mine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" selection-start-line="25" selection-end-line="25" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Day13/Cart.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="16" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+            <state relative-caret-position="321">
+              <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
             </state>
           </provider>
         </entry>
@@ -102,11 +58,13 @@
       <find>&gt;</find>
       <find>&lt;</find>
       <find>[&lt;&gt;^v]</find>
+      <find>data.add(</find>
     </findStrings>
     <replaceStrings>
       <replace>long</replace>
       <replace>int</replace>
       <replace>i</replace>
+      <replace>addData(</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -143,6 +101,7 @@
         <option value="$PROJECT_DIR$/src/Day13/Mine.java" />
         <option value="$PROJECT_DIR$/inputs/input13test.txt" />
         <option value="$PROJECT_DIR$/src/Day13/Day13Quick.java" />
+        <option value="$PROJECT_DIR$/src/Day14.java" />
       </list>
     </option>
   </component>
@@ -171,24 +130,7 @@
             <path>
               <item name="aocjava" type="b2602c69:ProjectViewProjectNode" />
               <item name="aocjava" type="462c0819:PsiDirectoryNode" />
-              <item name="inputs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aocjava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aocjava" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aocjava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aocjava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Day13" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aocjava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aocjava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="InputReader" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="aocjava" type="b2602c69:ProjectViewProjectNode" />
@@ -208,7 +150,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ToolWindowDebug.ShowToolbar" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556366819059" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556449200121" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TEXT" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Groovy JUnit" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Groovy JUnit" value="groovy.util.GroovyTestCase" />
@@ -239,7 +181,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Day13Quick">
+  <component name="RunManager" selected="Application.Day14">
     <configuration name="Day11" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Day11" />
       <module name="aocjava" />
@@ -274,23 +216,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Day11Testg.testCell" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Day14" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Day14" />
       <module name="aocjava" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="Day11Testg" />
-      <option name="METHOD_NAME" value="testCell" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Day14" />
         <item itemvalue="Application.Day13Quick" />
         <item itemvalue="Application.Day13" />
         <item itemvalue="Application.Day12" />
         <item itemvalue="Application.Day11" />
-        <item itemvalue="JUnit.Day11Testg.testCell" />
       </list>
     </recent_temporary>
   </component>
@@ -362,9 +301,9 @@
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.3292683" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.3292683" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="3" weight="0.09305211" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.17540687" />
       <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.32850242" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.32820976" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.3292683" />
@@ -377,8 +316,8 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-      <window_info active="true" anchor="right" x="1091" y="73" width="561" height="1092" id="Run" order="8" type="WINDOWED" visible="true" weight="0.2880724" />
-      <window_info anchor="right" id="Debug" order="9" weight="0.31514764" />
+      <window_info anchor="right" x="2255" y="91" width="994" height="1017" id="Run" order="8" type="WINDOWED" visible="true" weight="0.2880724" />
+      <window_info active="true" anchor="right" id="Debug" order="9" visible="true" weight="0.3146965" />
       <window_info anchor="right" x="0" y="0" width="350" height="737" id="Documentation" order="10" side_tool="true" weight="0.32991013" />
     </layout>
   </component>
@@ -649,8 +588,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Day13/Day13Quick.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="876">
-          <caret line="246" column="34" selection-start-line="246" selection-start-column="34" selection-end-line="246" selection-end-column="34" />
+        <state relative-caret-position="375">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Day14.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
         </state>
       </provider>
     </entry>
