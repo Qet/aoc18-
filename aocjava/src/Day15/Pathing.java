@@ -95,7 +95,7 @@ public class Pathing {
             System.out.println("From node " + curHop + " to node " + curHop.bestPath + "(" + curHop.bestDist + ")");
             curHop = curHop.bestPath;
         }
-        
+
     }
 
     public Pathing(){
