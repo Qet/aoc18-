@@ -8,3 +8,7 @@ pathing:
 
 turn order
 - sort by row, then by column
+
+terrain grid
+list of goblins
+list of elves
