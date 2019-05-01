@@ -12,3 +12,9 @@ turn order
 terrain grid
 list of goblins
 list of elves
+
+taking turns:
+- order units in reading order
+- if not in range of any enemies, then try to move in range to array
+- if in range, then attack.
+

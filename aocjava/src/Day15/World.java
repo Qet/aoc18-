@@ -2,36 +2,36 @@ package Day15;
 
 import InputReader.InputReader;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Day15Main {
+public class World {
 
     Grid grid;
 
-    List<Coords> goblins;
-    List<Coords> elves;
+    List<Goblin> goblins;
+    List<Elf> elves;
 
-    class Coords{
-        public Coords(int row, int col) {
-            this.row = row;
-            this.col = col;
-        }
-
-        public int row;
-        public int col;
+    public World(){
+        initGrid();
+        goblins = new ArrayList<>();
+        elves = new ArrayList<>();
     }
 
     void parseChar(int row, int col, char ch){
         grid.populateGrid(row, col, ch);
 
-        if (ch == 'E')
-            elves.add(new Coords(row, col));
+        if (ch == 'E') {
+            Elf newElf = new Elf(new Coords(row, col));
+            elves.add(newElf);
+            grid.
+        }
         else if (ch == 'G')
-            goblins.add(new Coords(row, col));
+            goblins.add(new Goblin(new Coords(row, col)));
 
     }
-    
-    void go(){
+
+    void initGrid(){
         InputReader ir = new InputReader(15);
         List<String> lines = ir.getLines();
         grid = new Grid(lines.size(), lines.get(0).length());

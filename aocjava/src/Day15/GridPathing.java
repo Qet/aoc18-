@@ -2,9 +2,6 @@ package Day15;
 
 public class GridPathing {
 
-    /*
-
-     */
 
     char[][] grid;
 

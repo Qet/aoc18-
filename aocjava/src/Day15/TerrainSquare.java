@@ -1,14 +1,16 @@
 package Day15;
 
-public class GridSquare {
+public class TerrainSquare {
+/*
+Represents a single square of terrain.
+ */
 
-    private boolean occupied;
     private boolean passableTerrain;
+    private Being occupant = null;
 
-    public GridSquare(){ }
+    public TerrainSquare(){ }
 
     public void initialise(char ch){
-        occupied = false;
         switch (ch){
             case '.':
                 passableTerrain = true;
@@ -16,18 +18,21 @@ public class GridSquare {
             case '#':
                 passableTerrain = false;
                 break;
-            default: //gob or elf
+            default: //gob or elf, but still passable. 
                 passableTerrain = true;
-                occupied = true;
                 break;
         }
     }
 
-    public void setOccupied(boolean value){
-        occupied = value;
+    public void setOccupant(Being occupant) {
+        this.occupant = occupant;
+    }
+
+    public boolean isOccupied(){
+        return occupant != null;
     }
 
     public boolean isPassable(){
-        return !occupied && passableTerrain;
+        return !isOccupied() && passableTerrain;
     }
 }
