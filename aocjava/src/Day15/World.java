@@ -2,9 +2,7 @@ package Day15;
 
 import InputReader.InputReader;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class World {
 
@@ -72,21 +70,60 @@ public class World {
     }
 
     boolean isInRangeOfEnemy(Being being){
+        List<Coords> adj = being.getAdjacentSquares();
+        for(Coords sq: adj){
+            if (grid.containsEnemy(sq))
+                return true;
+        }
         return false;
     }
 
     void move(Being mover){
+        /*
+        try to move in range:
+        - find all targets
+        - find all adjacent squares to those targets
+        - filter only the reachable squares
+        - sort nearest by distance (may be more than one)
+        - sort nearest by reading order.
+        - choose the first.
+         */
+
+        List<Being> enemies = getEnemyList(mover);
+        Set<Coords> adjacentSquares = getAdjacentSquares(enemies);
+
+        Optional<Coords> optTargetSquare =
+            adjacentSquares.
+                stream().
+                filter(sq -> isReachable(sq, mover)).
+                sorted(distanceComparator).
+                sorted(readingOrderComparator).
+                findFirst();
+
+        if (optTargetSquare.isPresent()) {
+            mover.moveTo(optTargetSquare.get());
+        }
 
     }
 
     void attack(Being attacker){
+        List<Being> enemies = getEnemyList(attacker);
 
+        Optional<Being> optTargetEnemy =
+            enemies.
+                stream()
+                .filter(enemy -> isAdjacent(enemy, attacker))
+                .sorted(fewestHitpointsComparator)
+                .findFirst();
+
+        if (optTargetEnemy.isPresent()) {
+            Being targetEnemy = optTargetEnemy.get();
+            targetEnemy.takeDamage(attacker.getPower());
+        }
     }
 
     void run(){
-        //For units in order:
-        //- if not in range of any enemies, then try to move in range to array
-        //- if in range, then attack.
+        List<Being> targets;
         sortBeings();
 
         for(Being b: beings){
@@ -97,7 +134,5 @@ public class World {
                 attack(b);
             }
         }
-
-
     }
 }
