@@ -26,13 +26,13 @@ public class World {
             Coords newCoords = new Coords(row, col);
             Elf newElf = new Elf(newCoords);
             elves.add(newElf);
-            grid.putBeing(newCoords, newElf);
+            grid.putBeing(newElf, newCoords);
         }
         else if (ch == 'G') {
             Coords newCoords = new Coords(row, col);
             Goblin newGoblin = new Goblin(newCoords);
             goblins.add(newGoblin);
-            grid.putBeing(newCoords, newGoblin);
+            grid.putBeing(newGoblin, newCoords);
         }
 
     }
@@ -60,8 +60,8 @@ public class World {
         Comparator<Being> readingOrder = new Comparator<Being>() {
             @Override
             public int compare(Being o1, Being o2) {
-                return grid.coordReadingOrder(o1.getCoords()) -
-                        grid.coordReadingOrder(o2.getCoords());
+                return grid.coordReadingOrder(o1.coords) -
+                        grid.coordReadingOrder(o2.coords);
             }
         };
 
@@ -70,12 +70,33 @@ public class World {
     }
 
     boolean isInRangeOfEnemy(Being being){
-        List<Coords> adj = being.getAdjacentSquares();
+        List<Coords> adj = grid.getAdjSquares(being.coords);
         for(Coords sq: adj){
-            if (grid.containsEnemy(sq))
-                return true;
+            for(Being adjBeing: grid.getAdjBeings(sq)){
+                if (areEnemies(being, adjBeing)){
+                    return true;
+                }
+            }
         }
         return false;
+    }
+
+    boolean areEnemies(Being A, Being B){
+        return A.getClass() != B.getClass();
+    }
+
+    List<? extends Being> getEnemyList(Being fromSource){
+        if (fromSource instanceof Elf)
+            return goblins;
+        return elves;
+    }
+
+    Set<Coords> getAdjacentSquares(Being fromSource){
+
+    }
+
+    boolean isReachable(Coords coords, Being mover){
+
     }
 
     void move(Being mover){
@@ -89,8 +110,11 @@ public class World {
         - choose the first.
          */
 
-        List<Being> enemies = getEnemyList(mover);
-        Set<Coords> adjacentSquares = getAdjacentSquares(enemies);
+        List<? extends Being> enemies = getEnemyList(mover);
+        Set<Coords> adjacentSquares = getAdjacentSquares(mover);
+        DistanceComparator distanceComparator = new DistanceComparator(mover, grid);
+        ReadingOrderComparator readingOrderComparator =
+                new ReadingOrderComparator(grid.getNumRows(), grid.getNumCols());
 
         Optional<Coords> optTargetSquare =
             adjacentSquares.
@@ -101,13 +125,22 @@ public class World {
                 findFirst();
 
         if (optTargetSquare.isPresent()) {
-            mover.moveTo(optTargetSquare.get());
+            grid.moveBeing(mover, optTargetSquare.get());
         }
+
+    }
+
+    void moveTo(Being mover, Coords dest){
+        mover.coords = dest;
+    }
+
+    boolean isAdjacent(Being A, Being B){
 
     }
 
     void attack(Being attacker){
         List<Being> enemies = getEnemyList(attacker);
+        FewestHitpointsComparator fewestHitpointsComparator = new FewestHitpointsComparator();
 
         Optional<Being> optTargetEnemy =
             enemies.
@@ -118,7 +151,7 @@ public class World {
 
         if (optTargetEnemy.isPresent()) {
             Being targetEnemy = optTargetEnemy.get();
-            targetEnemy.takeDamage(attacker.getPower());
+            targetEnemy.takeDamage(attacker.attackPower);
         }
     }
 

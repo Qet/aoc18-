@@ -1,5 +1,9 @@
 package Day15;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Grid {
 /*
 Represents the whole grid of terrain squares.
@@ -9,6 +13,39 @@ Represents the whole grid of terrain squares.
 
     private int numRows;
     private int numCols;
+
+    public int getNumRows() {
+        return numRows;
+    }
+
+    public int getNumCols() {
+        return numCols;
+    }
+
+    public List<Being> getAdjBeings(Coords centre){
+        List<Coords> adjCoords = getAdjSquares(centre);
+        return adjCoords.stream()
+                .map(coord -> inGrid(coord).occupant)
+                .collect(Collectors.toList());
+    }
+
+    public List<Coords> getAdjSquares(Coords centre){
+        int startRow = Math.max(centre.row - 1, 0);
+        int endRow = Math.min(centre.row + 1, numRows);
+
+        int startCol = Math.max(centre.col - 1, 0);
+        int endCol = Math.min(centre.col + 1, numCols);
+
+        List<Coords> ret = new ArrayList<>();
+
+        for (int row = startRow; row < endRow; row++) {
+            for (int col = startCol; col < endCol; col++) {
+                ret.add(new Coords(row, col));
+            }
+        }
+
+        return ret;
+    }
 
     public Grid(int rows, int cols){
         grid = new TerrainSquare[rows][cols];
@@ -24,12 +61,20 @@ Represents the whole grid of terrain squares.
         return grid[location.row][location.col];
     }
 
-    public void putBeing(Coords location, Being being){
-        inGrid(location).setOccupant(being);
+    public void putBeing(Being being, Coords location){
+        inGrid(location).occupant = being;
     }
 
     public int coordReadingOrder(Coords coord){
         return coord.row * numCols + coord.col;
+    }
+
+    public void removeBeing(Being toRemove){
+        inGrid(toRemove.coords).occupant = null;
+    }
+    public void moveBeing(Being mover, Coords dest){
+        removeBeing(mover);
+        putBeing(mover, dest);
     }
 
 }

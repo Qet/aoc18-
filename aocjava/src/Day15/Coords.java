@@ -8,4 +8,11 @@ class Coords {
 
     public int row;
     public int col;
+
+    public boolean isAdjacent(Coords other){
+        //up, down, left or right.
+        if (row == other.row){
+            
+        }
+    }
 }

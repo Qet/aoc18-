@@ -6,7 +6,8 @@ Represents a single square of terrain.
  */
 
     private boolean passableTerrain;
-    private Being occupant = null;
+
+    public Being occupant = null;
 
     public TerrainSquare(){ }
 
@@ -22,10 +23,6 @@ Represents a single square of terrain.
                 passableTerrain = true;
                 break;
         }
-    }
-
-    public void setOccupant(Being occupant) {
-        this.occupant = occupant;
     }
 
     public boolean isOccupied(){
