@@ -10,9 +10,11 @@ class Coords {
     public int col;
 
     public boolean isAdjacent(Coords other){
-        //up, down, left or right.
-        if (row == other.row){
-            
-        }
+        return  Math.abs(row - other.row) <= 1 &&
+                Math.abs(col - other.col) <= 1;
+    }
+
+    public boolean equals(Coords other){
+        return this.row == other.row && this.col == other.col;
     }
 }

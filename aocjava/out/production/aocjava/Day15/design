@@ -1,0 +1,20 @@
+attacks:
+- which squares are "open to attack"? (unoccupied surrounding a particular square X)
+- am i adjacent to any enemies? find all of them
+
+pathing:
+- is square Y reachable from square X?  or is it blocked?  (given a grid of squares that are either blocked or not)
+- if it's reachable, then how many steps does it take to get there (no diagonal steps allowed)
+
+turn order
+- sort by row, then by column
+
+terrain grid
+list of goblins
+list of elves
+
+taking turns:
+- order units in reading order
+- if not in range of any enemies, then try to move in range to array
+- if in range, then attack.
+

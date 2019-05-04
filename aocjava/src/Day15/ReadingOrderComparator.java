@@ -13,6 +13,6 @@ class ReadingOrderComparator implements Comparator<Coords> {
 
     @Override
     public int compare(Coords o1, Coords o2) {
-
+        return (o1.row - o2.row) * 1000 + o1.col - o2.col;
     }
 }

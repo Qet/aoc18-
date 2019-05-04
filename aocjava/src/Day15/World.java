@@ -13,10 +13,10 @@ public class World {
     List<Being> beings;
 
     public World(){
-        initGrid();
         goblins = new ArrayList<>();
         elves = new ArrayList<>();
         beings = new ArrayList<>();
+        initGrid();
     }
 
     void parseChar(int row, int col, char ch){
@@ -37,7 +37,7 @@ public class World {
 
     }
 
-    void initGrid(){
+    private void initGrid(){
         InputReader ir = new InputReader(15);
         List<String> lines = ir.getLines();
         grid = new Grid(lines.size(), lines.get(0).length());
@@ -72,7 +72,8 @@ public class World {
     boolean isInRangeOfEnemy(Being being){
         List<Coords> adj = grid.getAdjSquares(being.coords);
         for(Coords sq: adj){
-            for(Being adjBeing: grid.getAdjBeings(sq)){
+            List<Being> adjBeings = grid.getAdjBeings(sq);
+            for(Being adjBeing: adjBeings){
                 if (areEnemies(being, adjBeing)){
                     return true;
                 }
@@ -92,11 +93,12 @@ public class World {
     }
 
     Set<Coords> getAdjacentSquares(Being fromSource){
-
+        List<Coords> sqs = grid.getAdjSquares(fromSource.coords);
+        return new HashSet<Coords>(sqs);
     }
 
     boolean isReachable(Coords coords, Being mover){
-
+        return true;
     }
 
     void move(Being mover){
@@ -135,14 +137,14 @@ public class World {
     }
 
     boolean isAdjacent(Being A, Being B){
-
+        return A.coords.isAdjacent(B.coords);
     }
 
     void attack(Being attacker){
-        List<Being> enemies = getEnemyList(attacker);
+        List<? extends Being> enemies = getEnemyList(attacker);
         FewestHitpointsComparator fewestHitpointsComparator = new FewestHitpointsComparator();
 
-        Optional<Being> optTargetEnemy =
+        Optional<? extends Being> optTargetEnemy =
             enemies.
                 stream()
                 .filter(enemy -> isAdjacent(enemy, attacker))
@@ -167,5 +169,10 @@ public class World {
                 attack(b);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        World w = new World();
+        w.run();
     }
 }

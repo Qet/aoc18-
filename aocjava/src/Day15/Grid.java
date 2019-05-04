@@ -31,16 +31,18 @@ Represents the whole grid of terrain squares.
 
     public List<Coords> getAdjSquares(Coords centre){
         int startRow = Math.max(centre.row - 1, 0);
-        int endRow = Math.min(centre.row + 1, numRows);
+        int endRow = Math.min(centre.row + 2, numRows);
 
         int startCol = Math.max(centre.col - 1, 0);
-        int endCol = Math.min(centre.col + 1, numCols);
+        int endCol = Math.min(centre.col + 2, numCols);
 
         List<Coords> ret = new ArrayList<>();
 
         for (int row = startRow; row < endRow; row++) {
             for (int col = startCol; col < endCol; col++) {
-                ret.add(new Coords(row, col));
+                Coords coord = new Coords(row, col);
+                if (!coord.equals(centre))
+                    ret.add(coord);
             }
         }
 
@@ -49,6 +51,11 @@ Represents the whole grid of terrain squares.
 
     public Grid(int rows, int cols){
         grid = new TerrainSquare[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                grid[i][j] = new TerrainSquare();
+            }
+        }
         numCols = cols;
         numRows = rows;
     }
