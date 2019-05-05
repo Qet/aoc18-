@@ -26,6 +26,7 @@ Represents the whole grid of terrain squares.
         List<Coords> adjCoords = getAdjSquares(centre);
         return adjCoords.stream()
                 .map(coord -> inGrid(coord).occupant)
+                .filter(being -> being != null)
                 .collect(Collectors.toList());
     }
 

@@ -6,6 +6,8 @@ public class Being {
     public int HP;
     public int attackPower;
 
+    protected String name = "";
+
     public void takeDamage(int damage){
         HP -= damage;
     }
@@ -14,5 +16,10 @@ public class Being {
         this.coords = coords;
         HP = 200;
         attackPower = 3;
+    }
+
+    @Override
+    public String toString() {
+        return name + " @ " + "(" + coords.row + ", " + coords.col + ")";
     }
 }

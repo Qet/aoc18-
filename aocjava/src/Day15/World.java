@@ -70,13 +70,10 @@ public class World {
     }
 
     boolean isInRangeOfEnemy(Being being){
-        List<Coords> adj = grid.getAdjSquares(being.coords);
-        for(Coords sq: adj){
-            List<Being> adjBeings = grid.getAdjBeings(sq);
-            for(Being adjBeing: adjBeings){
-                if (areEnemies(being, adjBeing)){
-                    return true;
-                }
+        List<Being> adjBeings = grid.getAdjBeings(being.coords);
+        for(Being adjBeing: adjBeings){
+            if (areEnemies(being, adjBeing)){
+                return true;
             }
         }
         return false;
