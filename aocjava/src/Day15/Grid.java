@@ -39,12 +39,16 @@ Represents the whole grid of terrain squares.
 
         List<Coords> ret = new ArrayList<>();
 
-        for (int row = startRow; row < endRow; row++) {
-            for (int col = startCol; col < endCol; col++) {
-                Coords coord = new Coords(row, col);
-                if (!coord.equals(centre))
-                    ret.add(coord);
-            }
+        for(int row = startRow; row != endRow; row++){
+            Coords newCoords = new Coords(row, centre.col);
+            if (!newCoords.equals(centre))
+                ret.add(newCoords);
+        }
+
+        for(int col = startCol; col != endCol; col++){
+            Coords newCoords = new Coords(centre.row, col);
+            if (!newCoords.equals(centre))
+                ret.add(newCoords);
         }
 
         return ret;
