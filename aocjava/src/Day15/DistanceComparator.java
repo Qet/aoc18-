@@ -1,43 +1,36 @@
 package Day15;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 class DistanceComparator implements Comparator<Coords> {
-/*
-implements the distance of the source to a particular coord
- */
+    private Set<Coords> doneCoords;
+    private Map<Coords, Node> nodeMap;
+    private Queue<Coords> remainingCoords;
 
-    class Node{
-        public Node(Coords coord, Node bestNode, int bestDist) {
-            this.coord = coord;
-            this.bestNode = bestNode;
-            this.bestDist = bestDist;
-        }
-
-        public Coords coord;
-        public Node bestNode = null;
-        public int bestDist = Integer.MAX_VALUE;
-    }
+    Being source;
+    Grid grid;
+    int rows;
+    int cols;
+    private Node curNode;
 
     @Override
     public int compare(Coords o1, Coords o2) {
 
-        Queue<Coords> remainingCoords = new PriorityQueue<>();
-        Map<Coords, Node> nodeMap = new HashMap<>();
-        Set<Coords> doneCoords = new HashSet<>();
+        remainingCoords = new ConcurrentLinkedQueue<>();
+        nodeMap = new HashMap<>();  
+        doneCoords = new HashSet<>();
 
         boolean done = false;
 
-        Node curNode = new Node(o1, null, 0);
+        curNode = new Node(o1, null, 0);
         nodeMap.put(o1, curNode);
 
         while(!done){
             List<Coords> adjCoords = grid.getAdjSquares(curNode.coord);
             for(Coords curCoord: adjCoords){
                 if (!doneCoords.contains(curCoord)) {
-                    Node newNode = new Node(curCoord, curNode, 1 + curNode.bestDist);
-                    nodeMap.put(curCoord, newNode);
-                    remainingCoords.add(curCoord);
+                    addNewNode(curCoord);
                 }
             }
             doneCoords.add(curNode.coord);
@@ -53,10 +46,11 @@ implements the distance of the source to a particular coord
         return nodeMap.get(o2).bestDist;
     }
 
-    Being source;
-    Grid grid;
-    int rows;
-    int cols;
+    private void addNewNode(Coords curCoord) {
+        Node newNode = new Node(curCoord, curNode, 1 + curNode.bestDist);
+        nodeMap.put(curCoord, newNode);
+        remainingCoords.add(curCoord);
+    }
 
 
     public DistanceComparator(Being source, Grid grid) {
