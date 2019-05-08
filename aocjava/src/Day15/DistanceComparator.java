@@ -1,24 +1,25 @@
 package Day15;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 class DistanceComparator implements Comparator<Coords> {
     private Set<Coords> doneCoords;
     private Map<Coords, Node> nodeMap;
-    private Queue<Coords> remainingCoords;
+    private Deque<Coords> remainingCoords;
+
 
     Being source;
     Grid grid;
     int rows;
     int cols;
+    final int big = Integer.MAX_VALUE / 2;
     private Node curNode;
 
     @Override
     public int compare(Coords o1, Coords o2) {
 
-        remainingCoords = new ConcurrentLinkedQueue<>();
-        nodeMap = new HashMap<>();  
+        remainingCoords = new ArrayDeque<>();
+        nodeMap = new HashMap<>();
         doneCoords = new HashSet<>();
 
         boolean done = false;
@@ -36,7 +37,7 @@ class DistanceComparator implements Comparator<Coords> {
             doneCoords.add(curNode.coord);
 
             if (remainingCoords.size() > 0){
-                curNode = nodeMap.get(remainingCoords.remove());
+                curNode = nodeMap.get(remainingCoords.pop());
             }
             else{
                 done = true;
@@ -47,11 +48,11 @@ class DistanceComparator implements Comparator<Coords> {
     }
 
     private void addNewNode(Coords curCoord) {
+        if (grid.)
         Node newNode = new Node(curCoord, curNode, 1 + curNode.bestDist);
         nodeMap.put(curCoord, newNode);
         remainingCoords.add(curCoord);
     }
-
 
     public DistanceComparator(Being source, Grid grid) {
         this.source = source;

@@ -14,7 +14,22 @@ class Coords {
                 Math.abs(col - other.col) <= 1;
     }
 
-    public boolean equals(Coords other){
+    private boolean equals(Coords other){
         return this.row == other.row && this.col == other.col;
+    }
+
+    @Override
+    public int hashCode() {
+        return 21 * row + col;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return equals((Coords)obj);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + row + ", " + col + ")";
     }
 }

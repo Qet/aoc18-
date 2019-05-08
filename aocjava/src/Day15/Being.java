@@ -20,6 +20,6 @@ public class Being {
 
     @Override
     public String toString() {
-        return name + " @ " + "(" + coords.row + ", " + coords.col + ")";
+        return name + " @ " + coords;
     }
 }
