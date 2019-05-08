@@ -73,6 +73,10 @@ Represents the whole grid of terrain squares.
         return grid[location.row][location.col];
     }
 
+    public boolean isPassable(Coords location){
+        return inGrid(location).isPassable();
+    }
+
     public void putBeing(Being being, Coords location){
         inGrid(location).occupant = being;
     }

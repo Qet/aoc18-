@@ -1,27 +1,52 @@
 package Day15;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
 
 public class DistanceComparatorTest {
 
+    private Grid grid;
+    private DistanceComparator distanceComparator;
 
-    @Test
-    public void testDistComparator(){
+    @Before
+    public void setup(){
+
+    }
+
+    public void initialiseGrid(String[] gridmap){
         int rows, cols;
-        rows = cols = 2;
-        Grid grid = new Grid(2, 2);
-        Being being = new Being(new Coords(0,0));
-        DistanceComparator d = new DistanceComparator(being, grid);
+        rows = gridmap.length;
+        cols = gridmap[0].length();
+        grid = new Grid(rows, cols);
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                grid.populateGrid(i, j, '.');
+        int rownum = 0, colnum = 0;
+
+        for(String row: gridmap){
+            colnum = 0;
+            for(Character cell: row.toCharArray()){
+                grid.populateGrid(rownum, colnum, cell);
+                colnum++;
             }
+            rownum++;
         }
 
-        assertEquals(2, d.compare(new Coords(0,0), new Coords(1,1)));
+        Being being = new Being(new Coords(0,0));
+        distanceComparator = new DistanceComparator(being, grid);
+
+    }
+
+    @Test
+    public void testWithWall(){
+        initialiseGrid(new String[] {
+                "...",
+                ".#.",
+                ".#.",
+                ".#."
+            });
+
+        assertEquals(8, distanceComparator.compare(new Coords(3,0), new Coords(3,2)));
 
     }
 

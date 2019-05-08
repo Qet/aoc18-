@@ -12,7 +12,7 @@ class DistanceComparator implements Comparator<Coords> {
     Grid grid;
     int rows;
     int cols;
-    final int big = Integer.MAX_VALUE / 2;
+    final int UNPASSABLE = Integer.MAX_VALUE / 2;
     private Node curNode;
 
     @Override
@@ -48,8 +48,16 @@ class DistanceComparator implements Comparator<Coords> {
     }
 
     private void addNewNode(Coords curCoord) {
-        if (grid.)
-        Node newNode = new Node(curCoord, curNode, 1 + curNode.bestDist);
+        int dist = 0;
+        if (grid.isPassable(curCoord)) {
+            dist = 1;
+        }
+        else{
+            dist = UNPASSABLE;
+        }
+        int thisDist = dist + curNode.bestDist;
+        
+        Node newNode = new Node(curCoord, curNode, );
         nodeMap.put(curCoord, newNode);
         remainingCoords.add(curCoord);
     }

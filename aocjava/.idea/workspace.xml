@@ -8,9 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97ba61e-0837-4ccb-bb07-e88e6ad33b2e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Day15/Being.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day15/Being.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Day15/Coords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day15/Coords.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Day15/DistanceComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day15/DistanceComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Day15/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day15/Grid.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,8 +30,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="497">
-              <caret line="56" selection-start-line="56" selection-end-line="56" />
+            <state relative-caret-position="287">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
             </state>
           </provider>
         </entry>
@@ -63,20 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///usr/lib/jvm/jdk-11/lib/src.zip!/java.base/java/util/PriorityQueue.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
@@ -90,20 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Day15/Grid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="71" column="4" lean-forward="true" selection-start-line="71" selection-start-column="4" selection-end-line="71" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Day15/TerrainSquare.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="452">
+              <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -187,12 +169,12 @@
         <option value="$PROJECT_DIR$/src/Day15/FewestHitpointsComparator.java" />
         <option value="$PROJECT_DIR$/src/Day15/World.java" />
         <option value="$PROJECT_DIR$/src/Day15/Elf.java" />
-        <option value="$PROJECT_DIR$/src/Day15/Grid.java" />
         <option value="$PROJECT_DIR$/src/Day15/Goblin.java" />
-        <option value="$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java" />
         <option value="$PROJECT_DIR$/src/Day15/Being.java" />
         <option value="$PROJECT_DIR$/src/Day15/Coords.java" />
+        <option value="$PROJECT_DIR$/src/Day15/Grid.java" />
         <option value="$PROJECT_DIR$/src/Day15/DistanceComparator.java" />
+        <option value="$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java" />
       </list>
     </option>
   </component>
@@ -253,7 +235,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ToolWindowDebug.ShowToolbar" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557297501755" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557349015807" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TEXT" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Groovy JUnit" value="groovy.util.GroovyTestCase" />
@@ -291,20 +273,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.DistanceComparatorTest.testDistComparator">
-    <configuration name="Day13Quick" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Day13.Day13Quick" />
-      <module name="aocjava" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Day13.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.DistanceComparatorTest">
     <configuration name="Day14" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Day14" />
       <module name="aocjava" />
@@ -338,6 +307,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DistanceComparatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aocjava" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Day15.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Day15" />
+      <option name="MAIN_CLASS_NAME" value="Day15.DistanceComparatorTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DistanceComparatorTest.testDistComparator" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="aocjava" />
       <extension name="coverage">
@@ -356,11 +339,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DistanceComparatorTest" />
         <item itemvalue="JUnit.DistanceComparatorTest.testDistComparator" />
         <item itemvalue="Application.World" />
         <item itemvalue="Application.Pathing" />
         <item itemvalue="Application.Day14" />
-        <item itemvalue="Application.Day13Quick" />
       </list>
     </recent_temporary>
   </component>
@@ -378,9 +361,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DistanceComparatorTest_testDistComparator - 2019.05.08 at 06h 56m 47s.xml">
-      <configuration name="DistanceComparatorTest.testDistComparator" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="DistanceComparatorTest_testDistComparator - 2019.05.08 at 06h 58m 30s.xml">
       <configuration name="DistanceComparatorTest.testDistComparator" configurationId="JUnit" />
     </history-entry>
@@ -408,6 +388,9 @@
     <history-entry file="DistanceComparatorTest_testDistComparator - 2019.05.08 at 16h 33m 46s.xml">
       <configuration name="DistanceComparatorTest.testDistComparator" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="DistanceComparatorTest_testDistComparator - 2019.05.09 at 06h 31m 22s.xml">
+      <configuration name="DistanceComparatorTest.testDistComparator" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -422,7 +405,7 @@
     <frame x="0" y="31" width="1600" height="869" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49760765" visible="true" weight="0.14056483" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49760765" visible="true" weight="0.14056483" />
       <window_info id="Structure" order="1" sideWeight="0.50239235" side_tool="true" weight="0.14056483" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -432,7 +415,7 @@
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.3292683" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.3292683" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="3" weight="0.175" />
+      <window_info active="true" anchor="bottom" id="Messages" order="3" visible="true" weight="0.175" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.14736842" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
@@ -447,8 +430,8 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.24967907" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-      <window_info anchor="right" x="1040" y="96" width="560" height="804" id="Run" order="8" type="WINDOWED" weight="0.2880724" />
-      <window_info anchor="right" id="Debug" order="9" visible="true" weight="0.40693197" />
+      <window_info anchor="right" x="969" y="75" width="631" height="825" id="Run" order="8" type="WINDOWED" weight="0.2880724" />
+      <window_info anchor="right" id="Debug" order="9" weight="0.40693197" />
       <window_info anchor="right" x="0" y="0" width="350" height="737" id="Documentation" order="10" side_tool="true" weight="0.32991013" />
     </layout>
   </component>
@@ -502,12 +485,6 @@
           <line>68</line>
           <properties />
           <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/Day15/Grid.java</url>
-          <line>68</line>
-          <properties />
-          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -721,13 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Day15/TerrainSquare.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/jdk-11/lib/src.zip!/java.base/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
@@ -770,13 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/jdk-11/lib/src.zip!/java.base/java/util/PriorityQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/jdk-11/lib/src.zip!/java.base/java/util/Queue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -788,13 +751,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
           <caret line="149" column="8" selection-start-line="149" selection-start-column="8" selection-end-line="149" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Day15/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
@@ -812,24 +768,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java">
+    <entry file="jar:///usr/lib/jvm/jdk-11/lib/src.zip!/java.base/java/util/PriorityQueue.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="105">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparator.java">
+    <entry file="file://$PROJECT_DIR$/src/Day15/TerrainSquare.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Day15/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Day15/Grid.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="71" column="4" lean-forward="true" selection-start-line="71" selection-start-column="4" selection-end-line="71" selection-end-column="4" />
+        <state relative-caret-position="452">
+          <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
