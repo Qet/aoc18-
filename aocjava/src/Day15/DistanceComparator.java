@@ -12,34 +12,63 @@ class DistanceComparator implements Comparator<Coords> {
     Grid grid;
     int rows;
     int cols;
-    final int UNPASSABLE = Integer.MAX_VALUE / 2;
     private Node curNode;
+
+
+    void setUpNodeMap(){
+        nodeMap = new HashMap<>();
+
+        int rows = grid.getNumRows();
+        int cols = grid.getNumCols();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Coords curCoords = new Coords(i, j);
+                if (grid.isPassable(curCoords)){
+                    Node newNode = new Node(curCoords, null, Integer.MAX_VALUE);
+                    nodeMap.put(curCoords, newNode);
+                }
+            }
+        }
+    }
+
+    List<Node> getAdjNodes(Node curNode){
+        List<Coords> adjCoords = grid.getAdjSquares(curNode.coord);
+        List<Node> ret = new ArrayList<>();
+        for (Coords coord : adjCoords){
+            if (nodeMap.containsKey(coord)){
+                ret.add(nodeMap.get(coord));
+            }
+        }
+        return ret;
+    }
 
     @Override
     public int compare(Coords o1, Coords o2) {
 
         remainingCoords = new ArrayDeque<>();
-        nodeMap = new HashMap<>();
         doneCoords = new HashSet<>();
-
+        setUpNodeMap();
         boolean done = false;
 
-        curNode = new Node(o1, null, 0);
-        nodeMap.put(o1, curNode);
-
-        while(!done){
-            List<Coords> adjCoords = grid.getAdjSquares(curNode.coord);
-            for(Coords curCoord: adjCoords){
-                if (!doneCoords.contains(curCoord)) {
-                    addNewNode(curCoord);
+        Node curNode = nodeMap.get(o1);
+        while(!done) {
+            List<Node> adjNodes = getAdjNodes(curNode);
+            int bestDist = Integer.MAX_VALUE;
+            Node bestNode = null;
+            for (Node adjNode: adjNodes) {
+                int proposedDist = curNode.bestDist + 1;
+                if (proposedDist < adjNode.bestDist){
+                    adjNode.bestDist = proposedDist;
+                    adjNode.bestNode = curNode;
                 }
             }
+
             doneCoords.add(curNode.coord);
 
-            if (remainingCoords.size() > 0){
+            if (remainingCoords.size() > 0) {
                 curNode = nodeMap.get(remainingCoords.pop());
-            }
-            else{
+            } else {
                 done = true;
             }
         }
@@ -47,17 +76,14 @@ class DistanceComparator implements Comparator<Coords> {
         return nodeMap.get(o2).bestDist;
     }
 
+    private int getDist(Node curNode, Coords curCoord, Coords targetCoord){
+        if (!grid.isPassable(curCoord) || !grid.isPassable(targetCoord))
+            return UNPASSABLE;
+        return 1 + nodeMap.get(curCoord).bestDist;
+    }
+
     private void addNewNode(Coords curCoord) {
-        int dist = 0;
-        if (grid.isPassable(curCoord)) {
-            dist = 1;
-        }
-        else{
-            dist = UNPASSABLE;
-        }
-        int thisDist = dist + curNode.bestDist;
-        
-        Node newNode = new Node(curCoord, curNode, );
+        Node newNode = new Node(curCoord, null, UNPASSABLE);
         nodeMap.put(curCoord, newNode);
         remainingCoords.add(curCoord);
     }
