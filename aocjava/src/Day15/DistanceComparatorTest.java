@@ -46,7 +46,15 @@ public class DistanceComparatorTest {
                 ".#."
             });
 
-        assertEquals(8, distanceComparator.compare(new Coords(3,0), new Coords(3,2)));
+        assertEquals(8, distanceComparator.compare(new Coords(3,0),
+                new Coords(3,2)));
+
+        assertEquals(1, distanceComparator.compare(new Coords(3,0),
+                new Coords(2,0)));
+
+        assertEquals(6, distanceComparator.compare(new Coords(1,2),
+                new Coords(3,0)));
+
 
     }
 
