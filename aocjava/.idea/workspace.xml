@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+            <state relative-caret-position="15">
+              <caret line="47" column="23" lean-forward="true" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -82,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Day15/Grid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
+            <state relative-caret-position="295">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
             </state>
           </provider>
         </entry>
@@ -233,7 +233,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ToolWindowDebug.ShowToolbar" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557435771028" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557698447184" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TEXT" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Groovy JUnit" value="groovy.util.GroovyTestCase" />
@@ -359,18 +359,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DistanceComparatorTest_testDistComparator - 2019.05.08 at 16h 32m 34s.xml">
-      <configuration name="DistanceComparatorTest.testDistComparator" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DistanceComparatorTest_testDistComparator - 2019.05.08 at 16h 33m 46s.xml">
-      <configuration name="DistanceComparatorTest.testDistComparator" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DistanceComparatorTest_testDistComparator - 2019.05.09 at 06h 31m 22s.xml">
-      <configuration name="DistanceComparatorTest.testDistComparator" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DistanceComparatorTest - 2019.05.09 at 06h 54m 35s.xml">
-      <configuration name="DistanceComparatorTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="DistanceComparatorTest - 2019.05.09 at 06h 55m 59s.xml">
       <configuration name="DistanceComparatorTest" configurationId="JUnit" />
     </history-entry>
@@ -387,6 +375,18 @@
       <configuration name="DistanceComparatorTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="DistanceComparatorTest - 2019.05.10 at 06h 44m 01s.xml">
+      <configuration name="DistanceComparatorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DistanceComparatorTest - 2019.05.11 at 13h 38m 49s.xml">
+      <configuration name="DistanceComparatorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DistanceComparatorTest - 2019.05.11 at 13h 44m 27s.xml">
+      <configuration name="DistanceComparatorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DistanceComparatorTest - 2019.05.11 at 13h 45m 06s.xml">
+      <configuration name="DistanceComparatorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DistanceComparatorTest - 2019.05.11 at 13h 46m 00s.xml">
       <configuration name="DistanceComparatorTest" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -428,8 +428,8 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.24967907" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-      <window_info active="true" anchor="right" x="959" y="82" width="641" height="818" id="Run" order="8" type="WINDOWED" visible="true" weight="0.2880724" />
-      <window_info anchor="right" id="Debug" order="9" visible="true" weight="0.40693197" />
+      <window_info anchor="right" x="959" y="82" width="641" height="818" id="Run" order="8" type="WINDOWED" visible="true" weight="0.2880724" />
+      <window_info active="true" anchor="right" id="Debug" order="9" visible="true" weight="0.36970475" />
       <window_info anchor="right" x="0" y="0" width="350" height="737" id="Documentation" order="10" side_tool="true" weight="0.32991013" />
     </layout>
   </component>
@@ -483,14 +483,6 @@
           <line>68</line>
           <properties />
           <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Day15/DistanceComparator.java</url>
-          <line>46</line>
-          <properties class="Day15.DistanceComparator" method="compare">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -788,13 +780,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Day15/Grid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparatorTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="538">
@@ -809,10 +794,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Day15/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Day15/DistanceComparator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+        <state relative-caret-position="15">
+          <caret line="47" column="23" lean-forward="true" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
         </state>
       </provider>
     </entry>

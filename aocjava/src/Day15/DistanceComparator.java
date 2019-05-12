@@ -3,17 +3,12 @@ package Day15;
 import java.util.*;
 
 class DistanceComparator implements Comparator<Coords> {
-    private Set<Coords> doneCoords;
     private Map<Coords, Node> nodeMap;
-    private Deque<Coords> remainingCoords;
-
 
     Being source;
     Grid grid;
     int rows;
     int cols;
-    private Node curNode;
-
 
     void setUpNodeMap(){
         nodeMap = new HashMap<>();
@@ -45,47 +40,39 @@ class DistanceComparator implements Comparator<Coords> {
 
     @Override
     public int compare(Coords o1, Coords o2) {
-
-        remainingCoords = new ArrayDeque<>();
-        doneCoords = new HashSet<>();
+        Deque<Node> remainingNodes = new ArrayDeque<>();
+        Set<Node> visitedNodes = new HashSet<>();
         setUpNodeMap();
         boolean done = false;
 
         Node curNode = nodeMap.get(o1);
+        curNode.bestDist = 0; //Starting node has 0 dist to itself.
+
         while(!done) {
             List<Node> adjNodes = getAdjNodes(curNode);
-            int bestDist = Integer.MAX_VALUE;
-            Node bestNode = null;
             for (Node adjNode: adjNodes) {
                 int proposedDist = curNode.bestDist + 1;
                 if (proposedDist < adjNode.bestDist){
                     adjNode.bestDist = proposedDist;
                     adjNode.bestNode = curNode;
                 }
+
+                visitedNodes.add(curNode);
+
+                if (!visitedNodes.contains(adjNode) &&
+                        !remainingNodes.contains(adjNode)){
+                    remainingNodes.push(adjNode);
+                }
             }
 
-            doneCoords.add(curNode.coord);
-
-            if (remainingCoords.size() > 0) {
-                curNode = nodeMap.get(remainingCoords.pop());
+            if (remainingNodes.size() > 0) {
+                curNode = remainingNodes.pop();
             } else {
                 done = true;
             }
         }
 
         return nodeMap.get(o2).bestDist;
-    }
-
-    private int getDist(Node curNode, Coords curCoord, Coords targetCoord){
-        if (!grid.isPassable(curCoord) || !grid.isPassable(targetCoord))
-            return UNPASSABLE;
-        return 1 + nodeMap.get(curCoord).bestDist;
-    }
-
-    private void addNewNode(Coords curCoord) {
-        Node newNode = new Node(curCoord, null, UNPASSABLE);
-        nodeMap.put(curCoord, newNode);
-        remainingCoords.add(curCoord);
     }
 
     public DistanceComparator(Being source, Grid grid) {
