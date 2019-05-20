@@ -154,22 +154,36 @@ public class World {
         }
     }
 
-    void run(){
-        List<Being> targets;
+    void run() {
+
+
+        grid.print();
+
         sortBeings();
 
         for(Being b: beings){
             if (isInRangeOfEnemy(b)){
-                move(b);
-            }
-            else{
                 attack(b);
             }
+            else{
+                move(b);
+            }
         }
+
+        sleep();
+    }
+
+    void sleep(){
+        try{
+            Thread.sleep(2000);
+        }
+        catch (Exception e){}
     }
 
     public static void main(String[] args) {
         World w = new World();
-        w.run();
+        while(true) {
+            w.run();
+        }
     }
 }

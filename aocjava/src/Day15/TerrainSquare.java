@@ -32,4 +32,25 @@ Represents a single square of terrain.
     public boolean isPassable(){
         return !isOccupied() && passableTerrain;
     }
+
+    @Override
+    public String toString() {
+        if (isOccupied()){
+            if (occupant instanceof Goblin){
+                return "G";
+            }
+            else if (occupant instanceof  Elf){
+                return "E";
+            }
+        }
+        else{
+            if (passableTerrain){
+                return ".";
+            }
+            else{
+                return "#";
+            }
+        }
+        return "?";
+    }
 }

@@ -93,4 +93,16 @@ Represents the whole grid of terrain squares.
         putBeing(mover, dest);
     }
 
+    void print(){
+        for (int i = 0; i < 25; i++) {
+            System.out.println();
+        }
+        for (int i = 0; i < numCols; i++) {
+            for (int j = 0; j < numRows; j++) {
+                System.out.print(grid[j][i]);
+            }
+            System.out.println();
+        }
+    }
+
 }
