@@ -91,10 +91,14 @@ public class World {
 
     Set<Coords> getAdjacentSquares(Being fromSource){
         List<Coords> sqs = grid.getAdjSquares(fromSource.coords);
-        return new HashSet<Coords>(sqs);
+        return new HashSet<>(sqs);
     }
 
     boolean isReachable(Coords coords, Being mover){
+        DistanceComparator dc = new DistanceComparator(mover, grid);
+        if (dc.compare(mover.coords, coords) == Integer.MAX_VALUE){
+            return false;
+        }
         return true;
     }
 
@@ -110,10 +114,13 @@ public class World {
          */
 
         List<? extends Being> enemies = getEnemyList(mover);
-        Set<Coords> adjacentSquares = getAdjacentSquares(mover);
+        Set<Coords> adjacentSquares = new HashSet<>();
+        for (Being enemy: enemies){
+            adjacentSquares.addAll(getAdjacentSquares(enemy));
+        }
         DistanceComparator distanceComparator = new DistanceComparator(mover, grid);
         ReadingOrderComparator readingOrderComparator =
-                new ReadingOrderComparator(grid.getNumRows(), grid.getNumCols());
+            new ReadingOrderComparator(grid.getNumRows(), grid.getNumCols());
 
         Optional<Coords> optTargetSquare =
             adjacentSquares.
@@ -126,7 +133,6 @@ public class World {
         if (optTargetSquare.isPresent()) {
             grid.moveBeing(mover, optTargetSquare.get());
         }
-
     }
 
     void moveTo(Being mover, Coords dest){
@@ -155,8 +161,6 @@ public class World {
     }
 
     void run() {
-
-
         grid.print();
 
         sortBeings();

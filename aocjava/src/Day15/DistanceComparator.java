@@ -10,7 +10,10 @@ class DistanceComparator implements Comparator<Coords> {
     int rows;
     int cols;
 
-    void setUpNodeMap(){
+    Node makeInitialNode(Coords fromCoords){
+        return new Node(fromCoords, null, Integer.MAX_VALUE);
+    }
+    void setUpNodeMap(Coords o1, Coords o2){
         nodeMap = new HashMap<>();
 
         int rows = grid.getNumRows();
@@ -20,11 +23,16 @@ class DistanceComparator implements Comparator<Coords> {
             for (int j = 0; j < cols; j++) {
                 Coords curCoords = new Coords(i, j);
                 if (grid.isPassable(curCoords)){
-                    Node newNode = new Node(curCoords, null, Integer.MAX_VALUE);
+                    Node newNode = makeInitialNode(curCoords);
                     nodeMap.put(curCoords, newNode);
                 }
             }
         }
+
+        //o1 and o2 must be in the map regardless of passability,
+        // otherwise we can't calculate the distance between them
+        nodeMap.put(o1, makeInitialNode(o1));
+        nodeMap.put(o2, makeInitialNode(o2));
     }
 
     List<Node> getAdjNodes(Node curNode){
@@ -42,7 +50,7 @@ class DistanceComparator implements Comparator<Coords> {
     public int compare(Coords o1, Coords o2) {
         Deque<Node> remainingNodes = new ArrayDeque<>();
         Set<Node> visitedNodes = new HashSet<>();
-        setUpNodeMap();
+        setUpNodeMap(o1, o2);
         boolean done = false;
 
         Node curNode = nodeMap.get(o1);
